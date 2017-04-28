@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="724.647 -3453.468 1000.355 1000.822">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #1671f4;
+        stroke-width: 1px;
+      }
+    </style>
+  </defs>
+  <g id="Icon-wireframe-blue" transform="translate(724.65 -3453.5)">
+    <line id="line" class="cls-1" y2="996.622" transform="translate(213.919 0.5)"/>
+    <line id="line-2" data-name="line" class="cls-1" y2="996.622" transform="translate(788.661 0.5)"/>
+    <line id="line-3" data-name="line" class="cls-1" y2="997.654" transform="translate(501.305 1.532)"/>
+    <line id="line-4" data-name="line" class="cls-1" x1="998.218" transform="translate(2.132 498.796)"/>
+    <line id="line-5" data-name="line" class="cls-1" x1="997.186" transform="translate(2.697 211.071)"/>
+    <line id="line-6" data-name="line" class="cls-1" x1="997.186" transform="translate(2.697 786.52)"/>
+    <path id="path" class="cls-1" d="M1296.183,1546.721H716.469l-208.719-208.6V758.726l208.719-208.6h579.714l208.723,208.6v579.393Z" transform="translate(-505.054 -549.598)"/>
+    <path id="line-7" data-name="line" class="cls-1" d="M-1,0,0,998.686" transform="translate(106.493 0.5)"/>
+    <line id="line-8" data-name="line" class="cls-1" y2="998.686" transform="translate(895.956 0.5)"/>
+    <path id="path-2" data-name="path" class="cls-1" d="M826.42,868.79" transform="translate(173.462 128.333)"/>
+    <path id="path-3" data-name="path" class="cls-1" d="M252.27,462.432V251.83H463.492" transform="translate(536.391 534.69)"/>
+    <line id="line-9" data-name="line" class="cls-1" x1="998.218" transform="translate(1.132 105.738)"/>
+    <line id="line-10" data-name="line" class="cls-1" x1="998.218" transform="translate(1.132 892.853)"/>
+    <rect id="rectangle" class="cls-1" width="106.393" height="106.333" transform="translate(394.912 392.462)"/>
+    <rect id="rectangle-2" data-name="rectangle" class="cls-1" width="106.393" height="106.333" transform="translate(501.305 392.462)"/>
+    <rect id="rectangle-3" data-name="rectangle" class="cls-1" width="106.393" height="106.333" transform="translate(394.912 498.796)"/>
+    <rect id="rectangle-4" data-name="rectangle" class="cls-1" width="106.393" height="106.333" transform="translate(501.305 498.796)"/>
+    <line id="line-11" data-name="line" class="cls-1" x2="998.75" y2="998.186" transform="translate(1.132 1.532)"/>
+    <line id="line-12" data-name="line" class="cls-1" x1="999.532" y2="998.968" transform="translate(0.35 1.532)"/>
+    <line id="line-13" data-name="line" class="cls-1" y1="393.714" x2="393.968" transform="translate(106.493 105.082)"/>
+    <line id="line-14" data-name="line" class="cls-1" x1="393.217" y1="392.995" transform="translate(499.741 105.801)"/>
+    <line id="line-15" data-name="line" class="cls-1" x1="393.498" y1="393.276" transform="translate(107.807 498.545)"/>
+    <line id="line-16" data-name="line" class="cls-1" x1="393.749" y2="393.557" transform="translate(499.209 498.796)"/>
+    <line id="line-17" data-name="line" class="cls-1" x1="287.387" y2="288.788" transform="translate(213.919 211.071)"/>
+    <line id="line-18" data-name="line" class="cls-1" x1="287.355" y1="287.725" transform="translate(501.305 211.071)"/>
+    <line id="line-19" data-name="line" class="cls-1" y1="287.725" x2="288.544" transform="translate(500.116 498.796)"/>
+    <line id="line-20" data-name="line" class="cls-1" x2="286.198" y2="286.661" transform="translate(213.919 499.859)"/>
+  </g>
+</svg>

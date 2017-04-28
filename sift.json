@@ -1,0 +1,70 @@
+{
+  "name": "scrumbot",
+  "display-name": "Scrumbot Sift",
+  "description": "Slackbot for daily standup meetings",
+  "author": "",
+  "version": "1.0.0",
+  "icon": "assets/blueprint.svg",
+  "interfaces": {
+    "summary": {
+      "controller": "dist/js/controller.umd-es2015.min.js"
+    }
+  },
+  "dag": {
+    "inputs": {
+      "slack-bot": {
+        "_config": {
+          "clientID": "<CHANGE ME>",
+          "ambientMentionDuration": 300,
+          "permission": "personal",
+          "clientID": "95065394519.167019634064"
+        },
+        "all": {
+          "filter": {
+            "conditions": [
+              {
+                "type": "message:direct_mention,direct_message"
+              },
+              {
+                "text": {
+                  "regexp": {
+                    "pattern": ".*",
+                    "flags": "i"
+                  }
+                }
+              }
+            ],
+            "operator": "AND"
+          }
+        }
+      }
+    },
+    "nodes": [
+      {
+        "#": "Slack bot",
+        "implementation": {
+          "javascript": "server/slackbot.js"
+        },
+        "input": {
+          "bucket": "all",
+          "lookup": [{
+            "bucket": "server",
+            "key": "slack/bot_access_token"
+          }]
+        },
+        "outputs": {
+          "messages": {}
+        }
+      }
+    ],
+    "stores": {
+     "messages": {
+        "key$schema": "string"
+      },
+      "server": {
+        "import": "_server"
+      }
+    },
+    "outputs": {}
+  }
+}

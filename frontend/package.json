@@ -1,0 +1,17 @@
+{
+  "name": "scrumbot",
+  "version": "0.0.1",
+  "description": "Slackbot for daily standup meetings",
+  "scripts": {
+    "build": "gulp build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@redsift/ui-rs-core": "^0.8.3"
+  },
+  "devDependencies": {
+    "@redsift/sift-sdk-web": "0.7.0",
+    "@redsift/redsift-bundler": "0.7.3",
+    "gulp": "^3.9.1"
+  }
+}

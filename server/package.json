@@ -1,0 +1,11 @@
+{
+  "name": "scrumbot",
+  "display-name": "Scrumbot Sift",
+  "description": "Slackbot for daily standup meetings",
+  "author": "",
+  "version": "1.0.0",
+  "#": "Please use 'redsift npm' instead of system 'npm' ",
+  "dependencies": {
+    "request-promise": "^3.0.0"
+  }
+}
