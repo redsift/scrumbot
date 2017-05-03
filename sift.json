@@ -60,7 +60,7 @@
       {
         "#": "Process Messages",
         "implementation": {
-          "javascript": "server/slackbot.js"
+          "javascript": "server/messages.js"
         },
         "input": {
           "bucket": "slack",

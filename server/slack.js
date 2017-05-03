@@ -40,29 +40,6 @@ function postMessage(channel, text, attachments, botToken) {
   });
 }
 
-function listUsers(presence, botToken) {
-  return new Promise(function (resolve, reject) {
-
-
-    var options = {
-      uri: 'https://slack.com/api/users.list',
-      qs: {
-        token: botToken,
-        presence: presence
-      },
-      json: true // Automatically parses the JSON string in the response
-    };
-
-    rp(options).then(function (rsp) {
-      console.log('Received: ' + JSON.stringify(rsp));
-      resolve();
-    }).catch(function (err) {
-      // API call failed...
-      console.error('Error: ' + err);
-      reject(err);
-    });
-  });
-}
 
 function attachmentFields(color, fields) {
   /*jshint camelcase: false */

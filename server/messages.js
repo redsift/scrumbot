@@ -40,7 +40,7 @@ module.exports = function (got) {
         // remove <@..> direct mention
         msg.text = msg.text.replace(/(^<@.*>\s+)/i, '');
         console.log("AFTER EDIT ", msg.text)
-        reports.push(slack.postMessage("#"+msg.channel, 'Thanks for the report' + "<@"+msg.user+">", null, botToken));
+        reports.push(slack.postMessage(`<@${msg.user}>`, 'Thanks for the report' + "<@"+msg.user+">", null, botToken));
 
         reports.push({name: "reports", key: msg.user, value: msg.text})
 

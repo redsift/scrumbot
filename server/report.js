@@ -22,11 +22,11 @@ module.exports = function (got) {
     }
   });
 
-  var summary = "Current Standup Status\n";
+  var summary = "*Current Standup Status*\n";
   for (var d of inData.data) {
     console.log('report.js: data: ', d);
     let report = d.value.toString();
-    summary += d.key + ":" + d.value.toString() + "\n";
+    summary += "<@" + d.key + ">"  + ":\t \t" + d.value.toString() + "\n";
     console.log("REPORT: ", report)
     }
   console.log("SENDING ", summary)
