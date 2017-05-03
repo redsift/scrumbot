@@ -14,10 +14,12 @@ module.exports = function (got) {
 
   var promises = [];
   var botToken;
+  var reports = [];
 
   got.lookup.forEach(function (lookup) {
-    if (lookup.bucket === 'server' && lookup.data && lookup.data.key === 'slack/bot_access_token' && lookup.data.value) {
+    if (lookup.bucket === 'credentials' && lookup.data && lookup.data.key === 'slack/bot_access_token' && lookup.data.value) {
       botToken = lookup.data.value.toString();
+      console.log("BOT TOK ", botToken)
     }
   });
 
@@ -26,18 +28,22 @@ module.exports = function (got) {
     if (d.value) {
       try {
         var msg = JSON.parse(d.value);
-        if (msg.subtype === 'message_deleted') {
+        if (msg.subtype === 'message_deleted' || msg.subtype == "bot_message") {
+          console.log("DROPPING msg of subtype ", msg.subtype)
           continue;
         }
 
-        console.log('slackbot.js: msg: ', msg);
+        console.log('PROCESS MSG: ', msg);
 
         var session_id = msg.channel + '-' + msg.user + '-' + Date.now();
 
         // remove <@..> direct mention
-        msg.text = msg.text.replace(/(^<@.*>:\s+)/i, '');
+        msg.text = msg.text.replace(/(^<@.*>\s+)/i, '');
+        console.log("AFTER EDIT ", msg.text)
+        reports.push(slack.postMessage("#"+msg.channel, 'Thanks for the report' + "<@"+msg.user+">", null, botToken));
 
-        promises.push(slack.postMessage(msg.channel, 'Hello from scrumbot Bot', null, botToken));
+        reports.push({name: "reports", key: msg.user, value: msg.text})
+
       } catch (ex) {
         console.error('slackbot.js: Error parsing value for: ', d.key);
         console.error('slackbot.js: Exception: ', ex);
@@ -45,5 +51,5 @@ module.exports = function (got) {
       }
     }
   }
-  return promises;
+  return reports;
 };

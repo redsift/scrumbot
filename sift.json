@@ -14,16 +14,14 @@
     "inputs": {
       "slack-bot": {
         "_config": {
-          "clientID": "<CHANGE ME>",
           "ambientMentionDuration": 300,
-          "permission": "personal",
+          "permission": "team",
           "clientID": "95065394519.167019634064"
         },
-        "all": {
+        "slack": {
           "filter": {
-            "conditions": [
-              {
-                "type": "message:direct_mention,direct_message"
+            "conditions": [{
+                "type": "message:direct_mention,direct_message,ambient,mention AND users:list"
               },
               {
                 "text": {
@@ -39,29 +37,65 @@
         }
       }
     },
-    "nodes": [
-      {
-        "#": "Slack bot",
+    "nodes": [{
+        "#": "Clock",
         "implementation": {
-          "javascript": "server/slackbot.js"
+          "javascript": "server/clock.js",
+          "when": {
+            "crontab": "10 * * * *"
+          }
         },
         "input": {
-          "bucket": "all",
+          "bucket": "reports",
+          "select": "*",
           "lookup": [{
-            "bucket": "server",
+            "bucket": "credentials",
             "key": "slack/bot_access_token"
           }]
         },
         "outputs": {
-          "messages": {}
+          "reports": {}
+        }
+      },
+      {
+        "#": "Process Messages",
+        "implementation": {
+          "javascript": "server/slackbot.js"
+        },
+        "input": {
+          "bucket": "slack",
+          "lookup": [{
+            "bucket": "credentials",
+            "key": "slack/bot_access_token"
+          }]
+        },
+        "outputs": {
+          "reports": {}
+        }
+      },
+      {
+        "#": "Report Generator",
+        "implementation": {
+          "javascript": "server/report.js"
+        },
+        "input": {
+          "bucket": "reports",
+          "select": "*",
+          "lookup": [{
+            "bucket": "credentials",
+            "key": "slack/bot_access_token"
+          }]
+        },
+        "outputs": {
+          "reports": {}
         }
       }
     ],
     "stores": {
-     "messages": {
+      "reports": {
         "key$schema": "string"
       },
-      "server": {
+      "credentials": {
         "import": "_server"
       }
     },
