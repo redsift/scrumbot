@@ -15,7 +15,7 @@ module.exports = function (got) {
   var promises = [];
   var botToken;
   var reports = [];
-
+  //Extract Slack API token
   got.lookup.forEach(function (lookup) {
     if (lookup.bucket === 'credentials' && lookup.data && lookup.data.key === 'slack/bot_access_token' && lookup.data.value) {
       botToken = lookup.data.value.toString();
@@ -23,11 +23,11 @@ module.exports = function (got) {
   });
 
   var summary = "*Current Standup Status*\n";
+  // Append all report records to summary message
   for (var d of inData.data) {
     console.log('report.js: data: ', d);
     let report = d.value.toString();
-    summary += "<@" + d.key + ">"  + ":\t \t" + d.value.toString() + "\n";
-    console.log("REPORT: ", report)
+    summary += `<@${d.key}>:\t ${d.value.toString()\n}>`;
     }
   console.log("SENDING ", summary)
   reports.push(slack.postMessage("#general", summary, null, botToken));

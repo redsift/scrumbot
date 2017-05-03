@@ -1,5 +1,5 @@
 /**
- * Simple Bot Sift. DAG's 'Slack' node implementation
+ * Simple Scumbot Sift. DAG's 'Slack' node implementation
  */
 
 'use strict';
@@ -12,14 +12,13 @@ module.exports = function (got) {
   /* jshint -W069 */
   const inData = got['in'];
 
-  var promises = [];
   var botToken;
-  var reports = [];
+  var results = [];
 
+  //Extract the slack api token
   got.lookup.forEach(function (lookup) {
     if (lookup.bucket === 'credentials' && lookup.data && lookup.data.key === 'slack/bot_access_token' && lookup.data.value) {
       botToken = lookup.data.value.toString();
-      console.log("BOT TOK ", botToken)
     }
   });
 
@@ -33,17 +32,14 @@ module.exports = function (got) {
           continue;
         }
 
-        console.log('PROCESS MSG: ', msg);
-
-        var session_id = msg.channel + '-' + msg.user + '-' + Date.now();
+        //var session_id = msg.channel + '-' + msg.user + '-' + Date.now();
 
         // remove <@..> direct mention
         msg.text = msg.text.replace(/(^<@.*>\s+)/i, '');
-        console.log("AFTER EDIT ", msg.text)
+        // Thank the user
         reports.push(slack.postMessage(`<@${msg.user}>`, 'Thanks for the report' + "<@"+msg.user+">", null, botToken));
-
+        // Add the report to the list of reports.
         reports.push({name: "reports", key: msg.user, value: msg.text})
-
       } catch (ex) {
         console.error('slackbot.js: Error parsing value for: ', d.key);
         console.error('slackbot.js: Exception: ', ex);
@@ -51,5 +47,5 @@ module.exports = function (got) {
       }
     }
   }
-  return reports;
+  return results;
 };
