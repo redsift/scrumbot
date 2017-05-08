@@ -39,6 +39,11 @@ module.exports = function(got) {
   if (current) {
     console.log("UPDATING STATUS")
     results.push(slack.updateMessage(current.channel, current.ts, summary, null, botToken).then((res, rej) => {
+      return ({
+        name: "currentSummary",
+        key: "current",
+        value: res
+      })
     }));
   } else {
     console.log("NEW STATUS")

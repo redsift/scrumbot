@@ -46,11 +46,16 @@ module.exports = function (got) {
         //var session_id = msg.channel + '-' + msg.user + '-' + Date.now();
         // remove <@..> direct mention
         msg.text = msg.text.replace(/(^<@.*>\s+)/i, '');
+        
+        //Only accept messages from my private channel
+        if(msg.channel.substring(0,1) != 'D') {
+           continue;
+        }
         if(msg.text == "status") {
           slack.postMessage(`<@${msg.user}>`, currentSummary, null, botToken);
         } else {
           // Thank the user
-          slack.postMessage(`<@${msg.user}>`, 'Thanks for the report' + "<@"+msg.user+">", null, botToken);
+          slack.postMessage(`<@${msg.user}>`, 'Thanks for the report ' + "<@"+msg.user+">", null, botToken);
           // Add the report to the list of reports.
           results.push({name: "reports", key: msg.user, value: msg.text})
         }
