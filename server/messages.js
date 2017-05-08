@@ -14,11 +14,17 @@ module.exports = function (got) {
 
   var botToken;
   var results = [];
+  var currentSummary;
 
-  //Extract the slack api token
+
   got.lookup.forEach(function (lookup) {
+    //Extract the slack api token
     if (lookup.bucket === 'credentials' && lookup.data && lookup.data.key === 'slack/bot_access_token' && lookup.data.value) {
       botToken = lookup.data.value.toString();
+    }
+    if (lookup.bucket === 'currentSummary' && lookup.data && lookup.data.key === 'current' && lookup.data.value) {
+      currentSummary = JSON.parse(lookup.data.value.toString()).message.text;
+      console.log("CS", currentSummary)
     }
   });
 
@@ -26,24 +32,29 @@ module.exports = function (got) {
     console.log('MESSAGES: data: ', d.value.toString());
     if (d.value) {
       try {
+        //Ignore deleted messages and bot messages.
         var msg = JSON.parse(d.value);
         if (msg.subtype === 'message_deleted' || msg.subtype === "bot_message") {
           console.log("DROPPING msg of subtype ", msg.subtype)
           continue;
         }
+        // Ignore update messages
         if(msg.message) {
-          // It's an update, go one level down
           continue
         }
         console.log("VALID MSG: ", msg)
         //var session_id = msg.channel + '-' + msg.user + '-' + Date.now();
-
         // remove <@..> direct mention
         msg.text = msg.text.replace(/(^<@.*>\s+)/i, '');
-        // Thank the user
-        slack.postMessage(`<@${msg.user}>`, 'Thanks for the report' + "<@"+msg.user+">", null, botToken);
-        // Add the report to the list of reports.
-        results.push({name: "reports", key: msg.user, value: msg.text})
+        if(msg.text == "status") {
+          slack.postMessage(`<@${msg.user}>`, currentSummary, null, botToken);
+        } else {
+          // Thank the user
+          slack.postMessage(`<@${msg.user}>`, 'Thanks for the report' + "<@"+msg.user+">", null, botToken);
+          // Add the report to the list of reports.
+          results.push({name: "reports", key: msg.user, value: msg.text})
+        }
+
       } catch (ex) {
         console.error('MESSAGES: Error parsing value for: ', d.key);
         console.error('MESSAGES: Exception: ', ex);

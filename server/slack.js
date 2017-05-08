@@ -17,7 +17,8 @@ function postMessage(channel, text, attachments, botToken) {
       uri: 'https://slack.com/api/chat.postMessage',
       qs: {
         token: botToken,
-        channel: channel
+        channel: channel,
+        as_user: true
       },
       json: true // Automatically parses the JSON string in the response
     };

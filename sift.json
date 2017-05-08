@@ -68,7 +68,11 @@
           "lookup": [{
             "bucket": "credentials",
             "key": "slack/bot_access_token"
-          }]
+          },
+          {
+            "bucket": "currentSummary",
+            "key": "current"
+            }]
         },
         "outputs": {
           "reports": {}
