@@ -20,14 +20,23 @@ module.exports = function(got) {
   // Iterate over all report records and reset them.
   for (var d of inData.data) {
     console.log('clock.js: ', d);
-    results.push({name: "reports", key: d.key, value: "No report yet"});
+    results.push({
+      name: "reports",
+      key: d.key,
+      value: "No report yet"
+    });
   }
-  // Send out standup call message
+  // Send out standup call message, and reset currentSummary
   try {
-    results.push(slack.postMessage("#general", 'Hello, time for the standup, what are you working on today?', null, botToken));
+      slack.postMessage("#general", 'Hello, time for the standup, what are you working on today?', null, botToken);
   } catch (ex) {
     console.error('clock.js: Error parsing value for: ', d.key);
     console.error('clock.js: Exception: ', ex);
   }
+  results.push({
+    "name": "currentSummary",
+    "key": "current",
+    "value": null
+  })
   return results;
 };

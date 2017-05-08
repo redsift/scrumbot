@@ -23,26 +23,30 @@ module.exports = function (got) {
   });
 
   for (var d of inData.data) {
-    console.log('slackbot.js: data: ', d);
+    console.log('MESSAGES: data: ', d.value.toString());
     if (d.value) {
       try {
         var msg = JSON.parse(d.value);
-        if (msg.subtype === 'message_deleted' || msg.subtype == "bot_message") {
+        if (msg.subtype === 'message_deleted' || msg.subtype === "bot_message") {
           console.log("DROPPING msg of subtype ", msg.subtype)
           continue;
         }
-
+        if(msg.message) {
+          // It's an update, go one level down
+          continue
+        }
+        console.log("VALID MSG: ", msg)
         //var session_id = msg.channel + '-' + msg.user + '-' + Date.now();
 
         // remove <@..> direct mention
         msg.text = msg.text.replace(/(^<@.*>\s+)/i, '');
         // Thank the user
-        reports.push(slack.postMessage(`<@${msg.user}>`, 'Thanks for the report' + "<@"+msg.user+">", null, botToken));
+        slack.postMessage(`<@${msg.user}>`, 'Thanks for the report' + "<@"+msg.user+">", null, botToken);
         // Add the report to the list of reports.
-        reports.push({name: "reports", key: msg.user, value: msg.text})
+        results.push({name: "reports", key: msg.user, value: msg.text})
       } catch (ex) {
-        console.error('slackbot.js: Error parsing value for: ', d.key);
-        console.error('slackbot.js: Exception: ', ex);
+        console.error('MESSAGES: Error parsing value for: ', d.key);
+        console.error('MESSAGES: Exception: ', ex);
         continue;
       }
     }

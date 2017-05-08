@@ -31,7 +31,7 @@ function postMessage(channel, text, attachments, botToken) {
 
     rp(options).then(function (rsp) {
       console.log('Received: ' + JSON.stringify(rsp));
-      resolve();
+      resolve(rsp);
     }).catch(function (err) {
       // API call failed...
       console.error('Error: ' + err);
@@ -40,6 +40,45 @@ function postMessage(channel, text, attachments, botToken) {
   });
 }
 
+function updateMessage(channel, ts, text, attachments, botToken) {
+  return new Promise(function (resolve, reject) {
+    // sanitise channel
+    channel = channel.replace(/(^<@)/, '');
+    channel = channel.replace(/(^@)/, '');
+    channel = channel.replace(/(^<#)/, '');
+    channel = channel.replace(/(^#)/, '');
+    channel = channel.replace(/(>:$)/, '');
+    channel = channel.replace(/(>$)/, '');
+    //console.log('channel=', channel);
+
+    var options = {
+      uri: 'https://slack.com/api/chat.update',
+      qs: {
+        token: botToken,
+        channel: channel,
+        ts: ts,
+        as_user: true
+      },
+      json: true // Automatically parses the JSON string in the response
+    };
+
+    if (text) {
+      options.qs.text = text;
+    }
+    if (attachments) {
+      options.qs.attachments = JSON.stringify(attachments);
+    }
+
+    rp(options).then(function (rsp) {
+      console.log('Received: ' + JSON.stringify(rsp));
+      resolve(rsp);
+    }).catch(function (err) {
+      // API call failed...
+      console.error('Error: ' + err);
+      reject(err);
+    });
+  });
+}
 
 function attachmentFields(color, fields) {
   /*jshint camelcase: false */
@@ -80,7 +119,7 @@ function attachment(cfg) {
 
 module.exports = {
   postMessage: postMessage,
-  listUsers: listUsers,
+  updateMessage: updateMessage,
   attachmentFields: attachmentFields,
   attachment: attachment
 };

@@ -21,7 +21,7 @@
         "slack": {
           "filter": {
             "conditions": [{
-                "type": "message:direct_mention,direct_message,ambient,mention AND users:list"
+                "type": "message:direct_mention,direct_message,ambient,mention"
               },
               {
                 "text": {
@@ -42,7 +42,7 @@
         "implementation": {
           "javascript": "server/clock.js",
           "when": {
-            "crontab": "10 * * * *"
+            "crontab": "0 10 * * 1-5"
           }
         },
         "input": {
@@ -54,7 +54,8 @@
           }]
         },
         "outputs": {
-          "reports": {}
+          "reports": {},
+          "currentSummary": {}
         }
       },
       {
@@ -84,14 +85,21 @@
           "lookup": [{
             "bucket": "credentials",
             "key": "slack/bot_access_token"
+          },
+        {
+          "bucket": "currentSummary",
+          "key": "current"
           }]
         },
         "outputs": {
-          "reports": {}
+          "currentSummary": {}
         }
       }
     ],
     "stores": {
+      "currentSummary": {
+        "key$schema": "string"
+      },
       "reports": {
         "key$schema": "string"
       },
