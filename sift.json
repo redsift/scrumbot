@@ -15,8 +15,7 @@
       "slack-bot": {
         "_config": {
           "ambientMentionDuration": 300,
-          "permission": "team",
-          "clientID": "95065394519.167019634064"
+          "permission": "team"
         },
         "slack": {
           "filter": {
