@@ -46,7 +46,7 @@ module.exports = function (got) {
         //var session_id = msg.channel + '-' + msg.user + '-' + Date.now();
         // remove <@..> direct mention
         msg.text = msg.text.replace(/(^<@.*>\s+)/i, '');
-        
+
         //Only accept messages from my private channel
         if(msg.channel.substring(0,1) != 'D') {
            continue;
