@@ -27,12 +27,12 @@ module.exports = function(got) {
     console.log("CURRENT SUMMARY ", current);
   });
 
-  var summary = "*Current Standup Status*\n\n";
+  var summary = "*Current Standup Status*\n";
   // Append all report records to summary message
   for (var d of inData.data) {
     console.log('report.js: data: ', d);
     let report = d.value.toString();
-    summary += `<@${d.key}>:\t ${d.value.toString()}\n>`;
+    summary += `><@${d.key}>:\t ${d.value.toString()}\n`;
   }
   console.log("SENDING ", summary)
   // If there is a current report update it, otherwise post a new one.
