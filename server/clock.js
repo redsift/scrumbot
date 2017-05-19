@@ -28,15 +28,16 @@ module.exports = function(got) {
   }
   // Send out standup call message, and reset currentSummary
   try {
-      slack.postMessage("#general", 'Hello, time for the standup, what are you working on today?', null, botToken);
+      results.push(slack.postMessage("#general", 'Hello, time for the standup, what are you working on today?', null, botToken).then((res,rej)=> {
+        return({
+          "name": "currentSummary",
+          "key": "current",
+          "value": null
+        })
+      }));
   } catch (ex) {
-    console.error('clock.js: Error parsing value for: ', d.key);
     console.error('clock.js: Exception: ', ex);
   }
-  results.push({
-    "name": "currentSummary",
-    "key": "current",
-    "value": null
-  })
+
   return results;
 };
