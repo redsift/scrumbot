@@ -51,7 +51,7 @@ module.exports = function(got) {
         if (msg.channel.substring(0, 1) != 'D') {
           continue;
         }
-        if (msg.text == "status") {
+        if (msg.text.toLowerCase() == "status") {
           results.push(slack.postMessage(`<@${msg.user}>`, currentSummary, null, botToken).then(() => null)); // no result
         } else {
           // Thank the user and add the report to the list of reports.
