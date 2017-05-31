@@ -37,24 +37,33 @@
       }
     },
     "nodes": [{
-        "#": "Clock",
+        "#": "Reset Reports",
         "implementation": {
-          "javascript": "server/clock.js",
+          "javascript": "server/reset.js",
+          "when": {
+            "crontab": "0 0 * * 1-5"
+          }
+        },
+        "input": {
+          "bucket": "reports",
+          "select": "*"
+        },
+        "outputs": {
+          "reports": {},
+          "currentSummary": {}
+        }
+      },
+      {
+        "#": "Meeting call",
+        "implementation": {
+          "javascript": "server/meetingcall.js",
           "when": {
             "crontab": "0 10 * * 1-5"
           }
         },
         "input": {
-          "bucket": "reports",
-          "select": "*",
-          "lookup": [{
-            "bucket": "credentials",
-            "key": "slack/bot_access_token"
-          }]
-        },
-        "outputs": {
-          "reports": {},
-          "currentSummary": {}
+          "bucket": "credentials",
+          "select": "slack/bot_access_token"
         }
       },
       {
@@ -65,13 +74,14 @@
         "input": {
           "bucket": "slack",
           "lookup": [{
-            "bucket": "credentials",
-            "key": "slack/bot_access_token"
-          },
-          {
-            "bucket": "currentSummary",
-            "key": "current"
-            }]
+              "bucket": "credentials",
+              "key": "slack/bot_access_token"
+            },
+            {
+              "bucket": "currentSummary",
+              "key": "current"
+            }
+          ]
         },
         "outputs": {
           "reports": {}
@@ -86,13 +96,14 @@
           "bucket": "reports",
           "select": "*",
           "lookup": [{
-            "bucket": "credentials",
-            "key": "slack/bot_access_token"
-          },
-        {
-          "bucket": "currentSummary",
-          "key": "current"
-          }]
+              "bucket": "credentials",
+              "key": "slack/bot_access_token"
+            },
+            {
+              "bucket": "currentSummary",
+              "key": "current"
+            }
+          ]
         },
         "outputs": {
           "currentSummary": {}
