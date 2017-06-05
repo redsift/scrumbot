@@ -41,7 +41,7 @@
         "implementation": {
           "javascript": "server/reset.js",
           "when": {
-            "crontab": "0 0 * * 1-5"
+            "crontab": "0 8 * * 1-5"
           }
         },
         "input": {
