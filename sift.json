@@ -115,7 +115,8 @@
         "key$schema": "string"
       },
       "reports": {
-        "key$schema": "string"
+        "key$schema": "string",
+        "ttl": 2592000
       },
       "credentials": {
         "import": "_server"

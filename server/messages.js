@@ -15,7 +15,12 @@ module.exports = function(got) {
   var botToken;
   var results = [];
   var currentSummary;
+  var helpText = `Send all messages to scrumbot on it's private channel\n\
+  Any text sent to scrumbot will be taken as your standup report except the commands\n\
+  'status' which prints out the current report summary and 'help' which prints this message\n\
+  Please report any problems or bugs to team@redsift.com`
 
+  var outOfChannelText = `Please help keep the general channel clear by only talking to me on my private channel`
 
   got.lookup.forEach(function(lookup) {
     //Extract the slack api token
@@ -49,10 +54,13 @@ module.exports = function(got) {
 
         //Only accept messages from my private channel
         if (msg.channel.substring(0, 1) != 'D') {
+          results.push(slack.postMessage(`<@${msg.user}>`, outOfChannelText , null, botToken).then(() => null));
           continue;
         }
         if (msg.text.toLowerCase() == "status") {
           results.push(slack.postMessage(`<@${msg.user}>`, currentSummary, null, botToken).then(() => null)); // no result
+        } else if(msg.text.toLowerCase() == "help") {
+          results.push(slack.postMessage(`<@${msg.user}>`, helpText , null, botToken).then(() => null));
         } else {
           // Thank the user and add the report to the list of reports.
           results.push(slack.postMessage(`<@${msg.user}>`, 'Thanks for the report ' + "<@" + msg.user + ">", null, botToken)
