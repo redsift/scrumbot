@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="8081 3 376 376">
+  <defs>
+    <style>
+      .cls-1, .cls-4 {
+        fill: #fff;
+      }
+
+      .cls-2, .cls-5 {
+        fill: #33cce8;
+      }
+
+      .cls-3 {
+        fill: #269cb2;
+      }
+
+      .cls-4 {
+        stroke: #fff;
+      }
+
+      .cls-4, .cls-5 {
+        stroke-width: 10px;
+      }
+
+      .cls-5 {
+        stroke: #269cb2;
+      }
+
+      .cls-6 {
+        stroke: none;
+      }
+
+      .cls-7 {
+        fill: none;
+      }
+    </style>
+  </defs>
+  <g id="Group_7" data-name="Group 7" transform="translate(8081 3)">
+    <rect id="Rectangle_34" data-name="Rectangle 34" class="cls-1" width="376" height="376"/>
+    <g id="Group_3" data-name="Group 3" transform="translate(-162.178 5249.81) rotate(-90)">
+      <path id="Subtraction_2" data-name="Subtraction 2" class="cls-2" d="M69.71,41.786H.124L0,41.638,34.917,0,69.834,41.638l-.124.148Z" transform="translate(5039 198.286)"/>
+      <path id="Subtraction_4" data-name="Subtraction 4" class="cls-3" d="M69.709,41.785H.124L0,41.638H34.916V0L69.834,41.638l-.124.148Z" transform="translate(5039 198.286)"/>
+    </g>
+    <g id="Group_2" data-name="Group 2" transform="translate(538.18 -4898.024) rotate(90)">
+      <path id="Subtraction_2-2" data-name="Subtraction 2" class="cls-2" d="M69.71,41.786H.124L0,41.638,34.917,0,69.834,41.638l-.124.148Z" transform="translate(5039 198.286)"/>
+      <path id="Subtraction_4-2" data-name="Subtraction 4" class="cls-3" d="M69.709,41.785H.124L0,41.638H34.916V0L69.834,41.638l-.124.148Z" transform="translate(5039 198.286)"/>
+    </g>
+    <g id="Group_1" data-name="Group 1" transform="translate(-4929.674 37)">
+      <path id="Subtraction_2-3" data-name="Subtraction 2" class="cls-2" d="M157.069,101.575H.279L0,101.216,78.674,0l78.674,101.216-.279.359Z" transform="translate(5039 198.286)"/>
+      <path id="Subtraction_4-3" data-name="Subtraction 4" class="cls-3" d="M157.069,101.574H.279L0,101.215H78.674V0l78.675,101.215-.279.359Z" transform="translate(5039 198.287)"/>
+    </g>
+    <g id="Rectangle_25" data-name="Rectangle 25" class="cls-4" transform="translate(64 89)">
+      <rect class="cls-6" width="248" height="178" rx="85"/>
+      <rect class="cls-7" x="5" y="5" width="238" height="168" rx="80"/>
+    </g>
+    <g id="Rectangle_18" data-name="Rectangle 18" class="cls-5" transform="translate(70 91)">
+      <rect class="cls-6" width="236" height="170" rx="85"/>
+      <rect class="cls-7" x="5" y="5" width="226" height="160" rx="80"/>
+    </g>
+    <g id="Group_5" data-name="Group 5" transform="translate(2957.847 -4219.342) rotate(120)">
+      <path id="Subtraction_2-4" data-name="Subtraction 2" class="cls-2" d="M69.71,10.835H.124L0,10.8,34.917,0,69.834,10.8l-.124.038Z" transform="translate(5039 198.286)"/>
+      <path id="Subtraction_4-4" data-name="Subtraction 4" class="cls-3" d="M69.709,10.835H.124L0,10.8H34.916V0L69.834,10.8l-.124.038Z" transform="translate(5039 198.286)"/>
+    </g>
+    <g id="Group_6" data-name="Group 6" transform="translate(-2229.07 -4423.045) rotate(60)">
+      <path id="Subtraction_2-5" data-name="Subtraction 2" class="cls-2" d="M69.71,0H.124L0,.038l34.917,10.8L69.834.038,69.71,0Z" transform="translate(5039 198.286)"/>
+      <path id="Subtraction_4-5" data-name="Subtraction 4" class="cls-3" d="M69.709,0H.124L0,.038H34.916v10.8L69.834.038,69.71,0Z" transform="translate(5039 198.286)"/>
+    </g>
+    <circle id="Ellipse_3" data-name="Ellipse 3" class="cls-1" cx="46.447" cy="46.447" r="46.447" transform="translate(141.553 129.553)"/>
+    <path id="Subtraction_1" data-name="Subtraction 1" class="cls-2" d="M21.628,43.256a21.628,21.628,0,1,1,5.5-42.55,10.347,10.347,0,0,0,14.631,13A21.641,21.641,0,0,1,21.628,43.256Z" transform="translate(166.373 154.372)"/>
+  </g>
+</svg>

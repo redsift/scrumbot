@@ -5,6 +5,12 @@
   "author": "",
   "version": "1.0.0",
   "icon": "assets/blueprint.svg",
+  "subtitle": "A Slackbot for daily standup meetings",
+  "marketing": {
+	"screenshots": [
+	    "assets/slack_store_screen_shot.png"
+	]
+  },
   "interfaces": {
     "summary": {
       "controller": "dist/js/controller.umd-es2015.min.js"
