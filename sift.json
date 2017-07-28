@@ -2,14 +2,21 @@
   "name": "scrumbot",
   "display-name": "Scrumbot Sift",
   "description": "Slackbot for daily standup meetings",
-  "author": "",
+  "author": "Michael Karliner",
   "version": "1.0.0",
   "icon": "assets/icon.svg",
-  "subtitle": "A Slackbot for daily standup meetings",
+  "subtitle": "A Slackbot for daily standup meetings.",
   "marketing": {
-	"screenshots": [
+	  "screenshots": [
 	    "assets/slack_store_screen_shot.png"
-	]
+	  ],
+    "links": [
+      {
+        "label": "Github",
+        "type": "github",
+        "url": "https://github.com/redsift/scrumbot"
+      }
+    ]
   },
   "interfaces": {
     "summary": {
