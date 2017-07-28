@@ -33,7 +33,7 @@
         "slack": {
           "filter": {
             "conditions": [{
-                "type": "message:direct_mention,direct_message,ambient,mention"
+                "type": "message:direct_mention,direct_message,mention"
               },
               {
                 "text": {

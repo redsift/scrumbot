@@ -35,7 +35,7 @@ module.exports = function(got) {
         currentSummary = "No reports yet";
       }
     } else {
-      currentSummary = "Really no reports yet!"
+      currentSummary = "No reports yet!"
     }
     console.log("CS", currentSummary)
   });
