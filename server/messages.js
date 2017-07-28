@@ -28,9 +28,16 @@ module.exports = function(got) {
       botToken = lookup.data.value.toString();
     }
     if (lookup.bucket === 'currentSummary' && lookup.data && lookup.data.key === 'current' && lookup.data.value) {
-      currentSummary = JSON.parse(lookup.data.value.toString()).message.text;
-      console.log("CS", currentSummary)
+      try {
+        currentSummary = JSON.parse(lookup.data.value.toString()).message.text;
+      }
+      catch(ex) {
+        currentSummary = "No reports yet";
+      }
+    } else {
+      currentSummary = "Really no reports yet!"
     }
+    console.log("CS", currentSummary)
   });
 
   for (var d of inData.data) {
