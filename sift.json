@@ -93,11 +93,16 @@
             {
               "bucket": "currentSummary",
               "key": "current"
+            },
+            {
+              "bucket": "throttle",
+              "key": "throttle"
             }
           ]
         },
         "outputs": {
-          "reports": {}
+          "reports": {},
+          "throttle": {}
         }
       },
       {
@@ -133,6 +138,10 @@
       },
       "credentials": {
         "import": "_server"
+      },
+      "throttle": {
+        "key$schema": "string",
+        "ttl": 60
       }
     },
     "outputs": {}

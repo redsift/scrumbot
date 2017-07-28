@@ -15,6 +15,7 @@ module.exports = function(got) {
   var botToken;
   var results = [];
   var currentSummary;
+  var throttleUser;
   var helpText = `Send all messages to scrumbot on it's private channel\n\
   Any text sent to scrumbot will be taken as your standup report except the commands\n\
   'status' which prints out the current report summary and 'help' which prints this message\n\
@@ -27,11 +28,13 @@ module.exports = function(got) {
     if (lookup.bucket === 'credentials' && lookup.data && lookup.data.key === 'slack/bot_access_token' && lookup.data.value) {
       botToken = lookup.data.value.toString();
     }
+    if (lookup.bucket === 'throttle' && lookup.data && lookup.data.key === 'throttle' && lookup.data.value) {
+      throttleUser = lookup.data.value.toString();
+    }
     if (lookup.bucket === 'currentSummary' && lookup.data && lookup.data.key === 'current' && lookup.data.value) {
       try {
         currentSummary = JSON.parse(lookup.data.value.toString()).message.text;
-      }
-      catch(ex) {
+      } catch (ex) {
         currentSummary = "No reports yet";
       }
     } else {
@@ -61,13 +64,19 @@ module.exports = function(got) {
 
         //Only accept messages from my private channel
         if (msg.channel.substring(0, 1) != 'D') {
-          results.push(slack.postMessage(`<@${msg.user}>`, outOfChannelText , null, botToken).then(() => null));
+          if (throttleUser !== msg.user) {
+            results.push(slack.postMessage(`<@${msg.user}>`, outOfChannelText, null, botToken).then(() => ({
+              name: "throttle",
+              key: "throttle",
+              value: msg.user
+            })));
+          }
           continue;
         }
         if (msg.text.toLowerCase() == "status") {
           results.push(slack.postMessage(`<@${msg.user}>`, currentSummary, null, botToken).then(() => null)); // no result
-        } else if(msg.text.toLowerCase() == "help") {
-          results.push(slack.postMessage(`<@${msg.user}>`, helpText , null, botToken).then(() => null));
+        } else if (msg.text.toLowerCase() == "help") {
+          results.push(slack.postMessage(`<@${msg.user}>`, helpText, null, botToken).then(() => null));
         } else {
           // Thank the user and add the report to the list of reports.
           results.push(slack.postMessage(`<@${msg.user}>`, 'Thanks for the report ' + "<@" + msg.user + ">", null, botToken)
