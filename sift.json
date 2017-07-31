@@ -7,16 +7,14 @@
   "icon": "assets/icon.svg",
   "subtitle": "A Slackbot for daily standup meetings.",
   "marketing": {
-	  "screenshots": [
-	    "assets/slack_store_screen_shot.png"
-	  ],
-    "links": [
-      {
-        "label": "Github",
-        "type": "github",
-        "url": "https://github.com/redsift/scrumbot"
-      }
-    ]
+    "screenshots": [
+      "assets/slack_store_screen_shot.png"
+    ],
+    "links": [{
+      "label": "Github",
+      "type": "github",
+      "url": "https://github.com/redsift/scrumbot"
+    }]
   },
   "interfaces": {
     "summary": {
@@ -49,7 +47,23 @@
         }
       }
     },
-    "nodes": [{
+    "nodes": [
+
+      {
+        "#": "Installation",
+        "implementation": {
+          "javascript": "server/installation.js"
+        },
+        "input": {
+          "bucket": "credentials",
+          "select": "slack/bot_access_token"
+        },
+        "outputs": {
+          "reports": {},
+          "currentSummary": {}
+        }
+      },
+      {
         "#": "Reset Reports",
         "implementation": {
           "javascript": "server/reset.js",

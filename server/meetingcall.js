@@ -21,7 +21,7 @@ module.exports = function(got) {
   });
 
   // Send out standup call message
-  var wakeup = 'Hello, time for the standup, what are you working on today?';
+  var wakeup = 'Hello, <@channel> time for the standup, what are you working on today?';
 
   try {
       results.push(slack.postMessage("#general", wakeup, null, botToken).then(()=>{
