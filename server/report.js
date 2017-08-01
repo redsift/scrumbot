@@ -27,7 +27,7 @@ module.exports = function(got) {
     console.log("CURRENT SUMMARY ", current);
   });
 
-  var summary = "*Current Standup Status*\n";
+  var summary = "*Current Standup Status*\n_brought to you by <http://www.redsift.com|Red Sift>_\n";
   // Append all report records to summary message
   for (var d of inData.data) {
     console.log('report.js: data: ', d);

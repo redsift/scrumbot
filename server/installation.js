@@ -21,7 +21,7 @@ module.exports = function(got) {
   });
 
   // Send out standup call message
-  var installMsg = "Hello, I\'m <@scrum_bot>, please send me stand-up reports on my private channel when I ask for them. \n You can also ask me for 'status' and 'help'";
+  var installMsg = "Hello, I\'m <@scrumbot>, please send me stand-up reports on my private channel when I ask for them. \n You can also ask me for 'status' and 'help'";
 
   try {
       results.push(slack.postMessage("#general", installMsg, null, botToken).then(()=>{
