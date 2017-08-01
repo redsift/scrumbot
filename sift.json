@@ -68,7 +68,11 @@
         "implementation": {
           "javascript": "server/reset.js",
           "when": {
-            "crontab": "0 8 * * 1-5"
+            "crontab": "0 8 * * 1-5",
+            "run": {
+              "install": false,
+              "update": false
+            }
           }
         },
         "input": {
@@ -85,7 +89,11 @@
         "implementation": {
           "javascript": "server/meetingcall.js",
           "when": {
-            "crontab": "0 10 * * 1-5"
+            "crontab": "0 10 * * 1-5",
+            "run": {
+              "install": false,
+              "update": false
+            }
           }
         },
         "input": {
