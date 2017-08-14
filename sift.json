@@ -3,7 +3,7 @@
   "display-name": "Scrumbot Sift",
   "description": "Slackbot for daily standup meetings",
   "author": "Michael Karliner",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "icon": "assets/icon.svg",
   "subtitle": "A Slackbot for daily standup meetings.",
   "marketing": {
@@ -52,6 +52,7 @@
       {
         "#": "Installation",
         "implementation": {
+          "shared": true,
           "javascript": "server/installation.js"
         },
         "input": {
@@ -66,6 +67,7 @@
       {
         "#": "Reset Reports",
         "implementation": {
+          "shared": true,
           "javascript": "server/reset.js",
           "when": {
             "crontab": "0 8 * * 1-5",
@@ -87,6 +89,7 @@
       {
         "#": "Meeting call",
         "implementation": {
+          "shared": true,
           "javascript": "server/meetingcall.js",
           "when": {
             "crontab": "0 10 * * 1-5",
@@ -104,6 +107,7 @@
       {
         "#": "Process Messages",
         "implementation": {
+          "shared": true,
           "javascript": "server/messages.js"
         },
         "input": {
@@ -130,6 +134,7 @@
       {
         "#": "Report Generator",
         "implementation": {
+          "shared": true,
           "javascript": "server/report.js"
         },
         "input": {
