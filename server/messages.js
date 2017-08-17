@@ -22,29 +22,34 @@ module.exports = function(got) {
   Please report any problems or bugs to team@redsift.com`
 
   var outOfChannelText = `Please help keep the general channel clear by only talking to me on my private channel`
-
   got.lookup.forEach(function(lookup) {
     //Extract the slack api token
     if (lookup.bucket === 'credentials' && lookup.data && lookup.data.key === 'slack/bot_access_token' && lookup.data.value) {
       botToken = lookup.data.value.toString();
+      return;
     }
-    if (lookup.bucket === 'throttle' && lookup.data && lookup.data.key === 'throttle' && lookup.data.value) {
-      throttleUser = lookup.data.value.toString();
+    // Check to make sure that we haven't throtled the response because of duelling bots.
+    if (lookup.bucket === 'throttle' && lookup.data && lookup.data.key === 'throttle' ) {
+      throttleUser = lookup.data.value;
+      return;
     }
+    // Do we have a 'current' summary
     if (lookup.bucket === 'currentSummary' && lookup.data && lookup.data.key === 'current' && lookup.data.value) {
       try {
         currentSummary = JSON.parse(lookup.data.value.toString()).message.text;
       } catch (ex) {
         currentSummary = "No reports yet";
       }
+      return;
     } else {
-      currentSummary = "No reports yet!"
+      currentSummary = "No reports yet!";
+      return;
     }
-    console.log("CS", currentSummary)
+
   });
 
   for (var d of inData.data) {
-    console.log('MESSAGES: data: ', d.value.toString());
+    //console.log('MESSAGES: data: ', d.value.toString());
     if (d.value) {
       try {
         //Ignore deleted messages and bot messages.
