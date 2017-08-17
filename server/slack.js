@@ -19,7 +19,8 @@ function postMessage(channel, text, attachments, botToken) {
         token: botToken,
         channel: channel,
         as_user: true,
-        parse: "none"
+        parse: "none",
+        unfurl_links: false
       },
       json: true // Automatically parses the JSON string in the response
     };
@@ -60,7 +61,8 @@ function updateMessage(channel, ts, text, attachments, botToken) {
         channel: channel,
         ts: ts,
         as_user: true,
-        parse: "none"
+        parse: "none",
+        unfurl_links: false
       },
       json: true // Automatically parses the JSON string in the response
     };
