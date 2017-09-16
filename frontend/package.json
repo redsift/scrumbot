@@ -7,7 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@redsift/ui-rs-core": "^0.8.3"
+    "@redsift/ui-rs-core": "^0.8.3",
+    "moment": "^2.18.0",
+    "moment-timezone": "^0.5.13",
+    "jquery": "3.2.1"
   },
   "devDependencies": {
     "@redsift/sift-sdk-web": "0.7.0",

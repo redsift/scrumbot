@@ -45,6 +45,13 @@
             "operator": "AND"
           }
         }
+      },
+      "webhooks": {
+        "settingsHook": {
+          "inbound": {
+            "uri": "{key}/{value}"
+          }
+        }
       }
     },
     "nodes": [
@@ -61,16 +68,32 @@
         },
         "outputs": {
           "reports": {},
-          "currentSummary": {}
+          "currentSummary": {},
+          "settings": {},
+          "settingsExport": {}
         }
       },
       {
-        "#": "Reset Reports",
+        "#": "Process Settings",
         "implementation": {
           "shared": true,
-          "javascript": "server/reset.js",
+          "javascript": "server/settings.js"
+        },
+        "input": {
+          "bucket": "settingsHook"
+        },
+        "outputs": {
+          "settings": {},
+          "settingsExport": {}
+        }
+      },
+      {
+        "#": "Cron",
+        "implementation": {
+          "shared": true,
+          "javascript": "server/cron.js",
           "when": {
-            "crontab": "0 8 * * 1-5",
+            "crontab": "*/5 * * * 1-5",
             "run": {
               "install": false,
               "update": false
@@ -79,29 +102,15 @@
         },
         "input": {
           "bucket": "reports",
-          "select": "*"
+          "select": "*",
+          "lookup": [{
+            "bucket": "settings",
+            "key": "settings"
+          }]
         },
         "outputs": {
           "reports": {},
           "currentSummary": {}
-        }
-      },
-      {
-        "#": "Meeting call",
-        "implementation": {
-          "shared": true,
-          "javascript": "server/meetingcall.js",
-          "when": {
-            "crontab": "0 10 * * 1-5",
-            "run": {
-              "install": false,
-              "update": false
-            }
-          }
-        },
-        "input": {
-          "bucket": "credentials",
-          "select": "slack/bot_access_token"
         }
       },
       {
@@ -156,6 +165,9 @@
       }
     ],
     "stores": {
+      "settings": {
+        "key$schema": "string"
+      },
       "currentSummary": {
         "key$schema": "string"
       },
@@ -171,6 +183,12 @@
         "ttl": 60
       }
     },
-    "outputs": {}
+    "outputs": {
+      "exports": {
+        "settingsExport": {
+          "key$schema": "string"
+        }
+      }
+    }
   }
 }

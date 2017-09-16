@@ -1,14 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="dist/css/style.min.css">
-  </head>
-  <body>
-    <div class="center">
-      <img src="assets/icon.svg" style="width: 80px" />
-      <p>I am the Scrumbot and I am at your disposal</p>
-      <p>Your team can now tell me their updates every day and I'll publish the overall status in the #general channel.</p>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="dist/css/style.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/css/bootstrap-select.min.css">
+</head>
+
+<body>
+
+  <div class="center">
+    <img src="assets/icon.svg" style="width: 80px" />
+    <p>I am the Scrumbot and I am at your disposal</p>
+    <p>Your team can now tell me their updates every day and I'll publish the overall status in the #general channel.</p>
+    <p>Customize your settings below</p>
+  </div>
+  <div class="container">
+    <div class="starter-template">
+      <form id="settings-form">
+        <div class="form-group row">
+          <label for="tz1" class="col-sm-2 col-form-label">Timezone</label>
+          <div class="col-sm-10">
+            <select class="selectpicker" id="tz1" name="tz" data-live-search="true"></select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="ds1" class="col-sm-2 col-form-label">Start of Day</label>
+          <div class="col-sm-10">
+            <select class="selectpicker" id="ds1" name="start-of-day" data-live-search="true"></select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="mc1" class="col-sm-2 col-form-label">Meeting Call Time</label>
+          <div class="col-sm-10">
+            <select class="selectpicker" id="mc1" name="meeting-call" data-live-search="true"></select>
+          </div>
+        </div>
+        <!-- <p id="guess">nothing</p>
+        <p id="hook-uri">nothing</p> -->
+        <input type="submit" value="OK">
+      </form>
     </div>
-  </body>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.10/moment-timezone-with-data.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/js/bootstrap-select.min.js"></script>
+
+  <script>
+    var timezone = moment.tz.names();
+    for (var i = 0; i < timezone.length; i++) {
+      $('select[name=tz]').append('<option value="' + timezone[i] + '">' + timezone[i] + '</option>');
+    }
+    $('select[name=tz]').selectpicker();
+    for (var st = 1; st < 17; st++) {
+      $('select[name=start-of-day]').append('<option value="' + st + '">' + st + ":00"+ '</option>')
+    }
+    $('select[name=meeting-call]').selectpicker();
+    for (var st = 6; st < 23; st++) {
+      $('select[name=meeting-call]').append('<option value="' + st + '">' + st + ":00"+ '</option>')
+    }
+    $('select[name=meeting-call]').selectpicker();
+  </script>
+  <script>
+    $('#guess').text(moment.tz.guess())
+  </script>
+  <script>
+    console.log("TJIS ", this)
+     $('select[name=tz]').val("US/Eastern");
+    $('.selectpicker').selectpicker('refresh')
+  </script>
+  <script src="dist/js/view.umd-es2015.min.js"></script>
+</body>
+
 </html>

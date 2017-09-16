@@ -54,143 +54,90 @@
 	
 	var _siftSdkWeb = __webpack_require__(8);
 	
-	var _webhook = __webpack_require__(9);
-	
-	var _webhook2 = _interopRequireDefault(_webhook);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Scrumbot Sift. Frontend controller entry point.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Hello Sift Sift. Frontend view entry point.
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
 	
 	
-	function _sendWebhook(url, key, value) {
-	  // console.log('sched-sift: _sendWebhook: ', url, key, value);
-	  var wh = new XMLHttpRequest();
-	  var whurl = url;
-	  whurl = whurl.replace('{key}', encodeURIComponent(key));
-	  whurl = whurl.replace('{value}', encodeURIComponent(value));
-	  // console.log('sched-sift: _sendWebhook: sending: ', whurl);
-	  wh.open('GET', whurl, false);
-	  wh.send();
-	}
+	var MyView = function (_SiftView) {
+	  _inherits(MyView, _SiftView);
 	
-	var MyController = function (_SiftController) {
-	  _inherits(MyController, _SiftController);
+	  function MyView() {
+	    _classCallCheck(this, MyView);
 	
-	  function MyController() {
-	    _classCallCheck(this, MyController);
-	
-	    var _this = _possibleConstructorReturn(this, (MyController.__proto__ || Object.getPrototypeOf(MyController)).call(this));
+	    var _this = _possibleConstructorReturn(this, (MyView.__proto__ || Object.getPrototypeOf(MyView)).call(this));
 	    // You have to call the super() method to initialize the base class.
 	
 	
-	    _this._suHandler = _this.onStorageUpdate.bind(_this);
-	    _this.view.subscribe('wpm', _this.onFormSubmit.bind(_this));
+	    _this.controller.subscribe('settings', _this.onSettings.bind(_this));
+	    window.addEventListener('load', _this.formHandler.bind(_this));
+	
 	    return _this;
 	  }
 	
-	  // for more info: http://docs.redsift.com/docs/client-code-siftcontroller
+	  // for more info: http://docs.redsift.com/docs/client-code-siftview
 	
 	
-	  _createClass(MyController, [{
-	    key: 'loadView',
-	    value: function loadView(state) {
-	      console.log('scrumbot: loadView', state);
-	      // Register for storage update events on the "x" bucket so we can update the UI
-	      this.storage.subscribe(['settingsExport'], this._suHandler);
-	      switch (state.type) {
-	        case 'summary':
-	          var wh = this.getWebhook();
-	          var settings = this.getSettings();
-	          return {
-	            html: 'summary.html',
-	            data: Promise.all([wh, settings]).then(function (values) {
-	              console.log("PROMISES ", values);
-	              return {
-	                webhookUri: values[0],
-	                settings: JSON.parse(values[1].name)
-	              };
-	            })
-	          };
-	
-	        default:
-	          console.error('scrumbot: unknown Sift type: ', state.type);
-	      }
+	  _createClass(MyView, [{
+	    key: 'presentView',
+	    value: function presentView(value) {
+	      console.log('scrumbot-sift: presentView: ', value.data.settings.tz);
+	      $('select[name=tz]').val(value.data.settings.tz);
+	      $('.selectpicker').selectpicker('refresh');
+	      $('select[name=start-of-day]').val(value.data.settings.startOfDay);
+	      $('.selectpicker').selectpicker('refresh');
+	      $('select[name=meeting-call').val(value.data.settings.meetingCall);
+	      $('.selectpicker').selectpicker('refresh');
+	      //document.getElementById("tz1").val = value.data.settings.tz;
+	      //document.getElementById("tz1").selectpicker('refresh') ;
+	      //document.getElementById("settings-form").action = value.data.hook_uri;
+	      // document.getElementById("settings-form").addEventListener("submit", function(e){
+	      //   console.log("SUBMIT ", e, this);
+	      //   this.publish('wpm', e.target.value);
+	      // })
 	    }
-	
-	    // Event: storage update
-	
 	  }, {
-	    key: 'onStorageUpdate',
-	    value: function onStorageUpdate(value) {
-	      var _this2 = this;
+	    key: 'formHandler',
+	    value: function formHandler() {
+	      var that = this;
+	      document.getElementById("settings-form").addEventListener("submit", function (e) {
+	        console.log("SUBMIT ", e);
+	        var form = document.forms[0];
 	
-	      console.log('scrumbot: onStorageUpdate: ', value);
-	      return this.getSettings().then(function (xe) {
-	        // Publish events from 'who' to view
-	        console.log("OSU: ", xe);
-	        _this2.publish('name', xe);
+	        console.log("FORM STUFF ", form.tz.value);
+	        that.publish('wpm', {
+	          tz: form.tz.value,
+	          startOfDay: form['start-of-day'].value,
+	          meetingCall: form['meeting-call'].value
+	        });
 	      });
 	    }
 	  }, {
-	    key: 'onFormSubmit',
-	    value: function onFormSubmit(value) {
-	      console.log('scrumbot: FormSubmit: ', value);
-	      this.storage.get({
-	        bucket: '_redsift',
-	        keys: ['webhooks/settingsHook']
-	      }).then(function (wbr) {
-	        console.log('scrumbot: FormSubmit webhook url: ', wbr[0].value);
-	        // this._wpmSetting = value;
-	        // this.storage.putUser({ kvs: [{ key: 'wpm', value: value }] });
-	        // console.log("WEHHHH ", Webhook)
-	        // let wh = new Webhook(wbr[0].value);
-	        // wh.send('wpm', value);
-	        _sendWebhook(wbr[0].value, "settings", JSON.stringify(value));
-	      }).catch(function (error) {
-	        console.error('scrumbot: FormSubmit: ', error);
-	      });
+	    key: 'willPresentView',
+	    value: function willPresentView(value) {
+	      console.log('hello-sift: willPresentView: ', value);
 	    }
 	  }, {
-	    key: 'getWebhook',
-	    value: function getWebhook() {
-	      return this.storage.get({
-	        bucket: '_redsift',
-	        keys: ['webhooks/settingsHook']
-	      }).then(function (d) {
-	        console.log("WH", d[0]);
-	        return d[0].value;
-	      });
-	    }
-	  }, {
-	    key: 'getSettings',
-	    value: function getSettings() {
-	      return this.storage.getAll({
-	        bucket: 'settingsExport',
-	        keys: ['setttings']
-	      }).then(function (values) {
-	        console.log('scrumbot: getSettings returned:', values);
-	        return {
-	          name: values[0].value
-	        };
+	    key: 'onSettings',
+	    value: function onSettings(data) {
+	      console.log('tutorial-sift: onHello: ', data);
+	      Object.keys(data).forEach(function (k) {
+	        document.getElementById(k).textContent = data[k];
 	      });
 	    }
 	  }]);
 	
-	  return MyController;
-	}(_siftSdkWeb.SiftController);
+	  return MyView;
+	}(_siftSdkWeb.SiftView);
 	
-	// Do not remove. The Sift is responsible for registering its views and controllers
+	exports.default = MyView;
 	
 	
-	exports.default = MyController;
-	(0, _siftSdkWeb.registerSiftController)(new MyController());
+	(0, _siftSdkWeb.registerSiftView)(new MyView(window));
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
@@ -3602,67 +3549,6 @@
 	})));
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), (function() { return this; }())))
 
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(console) {'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	/**
-	 * sift-tldr: webhook sending utility class
-	 */
-	var Webhook = function () {
-	  function Webhook(url) {
-	    _classCallCheck(this, Webhook);
-	
-	    this.url = url;
-	  }
-	
-	  _createClass(Webhook, [{
-	    key: 'send',
-	    value: function send(key, value) {
-	      var _this = this;
-	
-	      return new Promise(function (resolve, reject) {
-	        console.log('webhook: send: ', key, value);
-	        var wh = new XMLHttpRequest();
-	        var formData = new FormData();
-	        var whurl = _this.url;
-	        if (key) {
-	          whurl = whurl.replace('{key}', encodeURIComponent(key));
-	        }
-	        if (value) {
-	          whurl = whurl.replace('{value}', encodeURIComponent(value));
-	        }
-	        wh.addEventListener('load', function (event) {
-	          console.log('webhook: send: load: ', event);
-	          resolve();
-	        });
-	        wh.addEventListener('error', function (event) {
-	          console.error('webhook: send: error: ', event);
-	          reject();
-	        });
-	        wh.open('POST', whurl);
-	        console.log('webhook: send: sending: ', whurl);
-	        wh.send();
-	      });
-	    }
-	  }]);
-	
-	  return Webhook;
-	}();
-	
-	exports.default = Webhook;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
-
 /***/ })
 /******/ ]);
-//# sourceMappingURL=controller.umd-es2015.js.map
+//# sourceMappingURL=view.umd-es2015.js.map

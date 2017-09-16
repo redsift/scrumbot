@@ -3,7 +3,10 @@
  */
 'use strict';
 
-var mainJS = [
+var mainJS = [{
+    name: 'view', // prefix for output file
+    indexFile: './src/scripts/view.js' // the index file
+  },
   {
     name: 'controller',
     indexFile: './src/scripts/controller.js'
@@ -13,12 +16,10 @@ var mainJS = [
 /**
  * Main styles for the Sift to be bundled
  */
-var styles = [
-  {
-    name: 'style',
-    indexFile: './src/styles/style.styl'
-  }
-];
+var styles = [{
+  name: 'style',
+  indexFile: './src/styles/style.styl'
+}];
 
 /**
  * Default configurations
@@ -33,8 +34,8 @@ var defaults = {
 };
 
 function bundles(type) {
-  var l, v, r =[];
-  switch(type) {
+  var l, v, r = [];
+  switch (type) {
     case 'css':
       l = styles;
       v = 'styles';
@@ -47,7 +48,7 @@ function bundles(type) {
       console.error('Unsupported bundle type: ', type);
       return;
   }
-  l.forEach(function (o) {
+  l.forEach(function(o) {
     var oo = {};
     oo[v] = o;
     r.push(Object.assign(oo, defaults));
