@@ -88,16 +88,12 @@
         }
       },
       {
-        "#": "Cron",
+        "#": "Heartbeat",
         "implementation": {
-          "shared": true,
           "javascript": "server/cron.js",
           "when": {
-            "crontab": "*/5 * * * 1-5",
-            "run": {
-              "install": false,
-              "update": false
-            }
+            "crontab": "*/5 * * * 1-5"
+
           }
         },
         "input": {

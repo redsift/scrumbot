@@ -1,10 +1,6 @@
-/**
- * Simple Bot Sift. DAG's 'Slack' node implementation
- */
-
 'use strict';
 
-// var slack = require('./slack.js');
+//var slack = require('./slack.js');
 
 // Entry point for DAG node
 module.exports = function(got) {
@@ -12,26 +8,28 @@ module.exports = function(got) {
   var results = [];
   var botToken;
   // Extract the Slack API token
-
-  // Iterate over all report records and reset them.
-  // for (var d of inData.data) {
-  //   console.log('RESETTING: ', d);
-  //   results.push({
-  //     name: "reports",
-  //     key: d.key,
-  //     value: "No report yet"
-  //   });
-  // }
-  //
-  // // Reset current summary
-  // results.push({
-  //   "name": "currentSummary",
-  //   "key": "current",
-  //   "value": null
+  console.log("IDDDDDDDDDDDDDDDDDDD ", inData)
+  console.log("IDDDDDDDDDDDDDDDDDDD ", inData)
+  console.log("IDDDDDDDDDDDDDDDDDDD ", inData)
+  console.log("IDDDDDDDDDDDDDDDDDDD ", inData)
+  console.log("IDDDDDDDDDDDDDDDDDDD ", inData)
+  // inData.data.forEach(function(d) {
+  //   if(d.key == 'slack/bot_access_token') {
+  //     botToken = d.value.toString();
+  //     console.log("BT ", botToken)
+  //   }
   // });
-  console.log("Running the cron job")
+  //
+  // // Send out standup call message
+  // var wakeup = 'Hello, time for the standup, what are you working on today?';
+  //
+  // try {
+  //     results.push(slack.postMessage("#general", wakeup, null, botToken).then(()=>{
+  //       return null;
+  //     }));
+  // } catch (ex) {
+  //   console.error('meetingcall: Exception: ', ex);
+  // }
 
-
-
-  return results;
+  
 };

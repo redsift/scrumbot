@@ -54,12 +54,6 @@
 	
 	var _siftSdkWeb = __webpack_require__(8);
 	
-	var _webhook = __webpack_require__(9);
-	
-	var _webhook2 = _interopRequireDefault(_webhook);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -67,6 +61,9 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Scrumbot Sift. Frontend controller entry point.
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+	
+	
+	//import Webhook from './lib/webhook';
 	
 	
 	function _sendWebhook(url, key, value) {
@@ -3602,67 +3599,6 @@
 	
 	})));
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), (function() { return this; }())))
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(console) {'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	/**
-	 * sift-tldr: webhook sending utility class
-	 */
-	var Webhook = function () {
-	  function Webhook(url) {
-	    _classCallCheck(this, Webhook);
-	
-	    this.url = url;
-	  }
-	
-	  _createClass(Webhook, [{
-	    key: 'send',
-	    value: function send(key, value) {
-	      var _this = this;
-	
-	      return new Promise(function (resolve, reject) {
-	        console.log('webhook: send: ', key, value);
-	        var wh = new XMLHttpRequest();
-	        var formData = new FormData();
-	        var whurl = _this.url;
-	        if (key) {
-	          whurl = whurl.replace('{key}', encodeURIComponent(key));
-	        }
-	        if (value) {
-	          whurl = whurl.replace('{value}', encodeURIComponent(value));
-	        }
-	        wh.addEventListener('load', function (event) {
-	          console.log('webhook: send: load: ', event);
-	          resolve();
-	        });
-	        wh.addEventListener('error', function (event) {
-	          console.error('webhook: send: error: ', event);
-	          reject();
-	        });
-	        wh.open('POST', whurl);
-	        console.log('webhook: send: sending: ', whurl);
-	        wh.send();
-	      });
-	    }
-	  }]);
-	
-	  return Webhook;
-	}();
-	
-	exports.default = Webhook;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ })
 /******/ ]);

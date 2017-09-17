@@ -6,7 +6,7 @@ import {
   registerSiftController
 } from '@redsift/sift-sdk-web';
 
-import Webhook from './lib/webhook';
+//import Webhook from './lib/webhook';
 
 
 function _sendWebhook(url, key, value) {
