@@ -15,6 +15,7 @@ export default class MyView extends SiftView {
 
   }
 
+
   // for more info: http://docs.redsift.com/docs/client-code-siftview
   presentView(value) {
     console.log('scrumbot-sift: presentView: ', value.data.settings.tz);
@@ -23,7 +24,7 @@ export default class MyView extends SiftView {
     $('select[name=start-of-day]').val(value.data.settings.startOfDay);
     $('.selectpicker').selectpicker('refresh')
     $('select[name=meeting-call').val(value.data.settings.meetingCall);
-    $('.selectpicker').selectpicker('refresh')
+    $('.selectpicker').selectpicker('refresh');
     //document.getElementById("tz1").val = value.data.settings.tz;
     //document.getElementById("tz1").selectpicker('refresh') ;
     //document.getElementById("settings-form").action = value.data.hook_uri;
@@ -38,9 +39,10 @@ export default class MyView extends SiftView {
     let that = this;
     document.getElementById("settings-form").addEventListener("submit", function(e) {
       console.log("SUBMIT ", e);
+      e.preventDefault()
       let form = document.forms[0];
 
-      console.log("FORM STUFF ", form.tz.value);
+      // console.log("FORM STUFF ", form.tz.value);
       that.publish('wpm', {
         tz: form.tz.value,
         startOfDay: form['start-of-day'].value,
@@ -55,10 +57,14 @@ export default class MyView extends SiftView {
   };
 
   onSettings(data) {
-    console.log('tutorial-sift: onHello: ', data);
-    Object.keys(data).forEach((k) => {
-      document.getElementById(k).textContent = data[k];
-    });
+    let settings = data;
+    console.log('scrumbot: onSettings view: ', settings);
+    $('select[name=tz]').val(settings.tz);
+    $('.selectpicker').selectpicker('refresh')
+    $('select[name=start-of-day]').val(parseInt(settings.startOfDay));
+    $('.selectpicker').selectpicker('refresh')
+    $('select[name=meeting-call').val(parseInt(settings.meetingCall));
+    $('.selectpicker').selectpicker('refresh');
   }
 
 }

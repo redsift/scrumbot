@@ -111,7 +111,7 @@
 	          return {
 	            html: 'summary.html',
 	            data: Promise.all([wh, settings]).then(function (values) {
-	              console.log("PROMISES ", values);
+	              // console.log("PROMISES ", values)
 	              return {
 	                webhookUri: values[0],
 	                settings: JSON.parse(values[1].name)
@@ -133,9 +133,10 @@
 	
 	      console.log('scrumbot: onStorageUpdate: ', value);
 	      return this.getSettings().then(function (xe) {
-	        // Publish events from 'who' to view
-	        console.log("OSU: ", xe);
-	        _this2.publish('name', xe);
+	        //   // Publish events from settings to view
+	        var settings = JSON.parse(xe.name);
+	        console.log("OSU: ", settings);
+	        _this2.publish('settings', settings);
 	      });
 	    }
 	  }, {
@@ -164,18 +165,18 @@
 	        bucket: '_redsift',
 	        keys: ['webhooks/settingsHook']
 	      }).then(function (d) {
-	        console.log("WH", d[0]);
+	        // console.log("WH", d[0])
 	        return d[0].value;
 	      });
 	    }
 	  }, {
 	    key: 'getSettings',
 	    value: function getSettings() {
-	      return this.storage.getAll({
+	      return this.storage.get({
 	        bucket: 'settingsExport',
-	        keys: ['setttings']
+	        keys: ['settings']
 	      }).then(function (values) {
-	        console.log('scrumbot: getSettings returned:', values);
+	        console.log('scrumbot: getSettings returned:', values[0].value);
 	        return {
 	          name: values[0].value
 	        };

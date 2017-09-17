@@ -106,9 +106,10 @@
 	      var that = this;
 	      document.getElementById("settings-form").addEventListener("submit", function (e) {
 	        console.log("SUBMIT ", e);
+	        e.preventDefault();
 	        var form = document.forms[0];
 	
-	        console.log("FORM STUFF ", form.tz.value);
+	        // console.log("FORM STUFF ", form.tz.value);
 	        that.publish('wpm', {
 	          tz: form.tz.value,
 	          startOfDay: form['start-of-day'].value,
@@ -124,10 +125,14 @@
 	  }, {
 	    key: 'onSettings',
 	    value: function onSettings(data) {
-	      console.log('tutorial-sift: onHello: ', data);
-	      Object.keys(data).forEach(function (k) {
-	        document.getElementById(k).textContent = data[k];
-	      });
+	      var settings = data;
+	      console.log('scrumbot: onSettings view: ', settings);
+	      $('select[name=tz]').val(settings.tz);
+	      $('.selectpicker').selectpicker('refresh');
+	      $('select[name=start-of-day]').val(parseInt(settings.startOfDay));
+	      $('.selectpicker').selectpicker('refresh');
+	      $('select[name=meeting-call').val(parseInt(settings.meetingCall));
+	      $('.selectpicker').selectpicker('refresh');
 	    }
 	  }]);
 	

@@ -40,7 +40,7 @@ export default class MyController extends SiftController {
         return {
           html: 'summary.html',
           data: Promise.all([wh, settings]).then(values => {
-              console.log("PROMISES ", values)
+              // console.log("PROMISES ", values)
               return {
                 webhookUri: values[0],
                 settings: JSON.parse(values[1].name)
@@ -55,9 +55,10 @@ export default class MyController extends SiftController {
     onStorageUpdate(value) {
       console.log('scrumbot: onStorageUpdate: ', value);
       return this.getSettings().then(xe => {
-        // Publish events from 'who' to view
-        console.log("OSU: ", xe)
-        this.publish('name', xe);
+      //   // Publish events from settings to view
+        let settings = JSON.parse(xe.name)
+        console.log("OSU: ", settings)
+        this.publish('settings', settings);
       });
     }
 
@@ -85,17 +86,17 @@ export default class MyController extends SiftController {
         bucket: '_redsift',
         keys: ['webhooks/settingsHook']
       }).then(d => {
-        console.log("WH", d[0])
+        // console.log("WH", d[0])
         return d[0].value
       });
     }
 
     getSettings() {
-      return this.storage.getAll({
+      return this.storage.get({
         bucket: 'settingsExport',
-        keys: ['setttings']
+        keys: ['settings']
       }).then((values) => {
-        console.log('scrumbot: getSettings returned:', values);
+        console.log('scrumbot: getSettings returned:', values[0].value);
         return {
           name: values[0].value
         };
