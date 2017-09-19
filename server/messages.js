@@ -16,9 +16,9 @@ module.exports = function(got) {
   var results = [];
   var currentSummary;
   var throttleUser;
-  var helpText = `Send all messages to scrumbot on it's private channel\n\
-  Any text sent to scrumbot will be taken as your standup report except the commands\n\
-  'status' which prints out the current report summary and 'help' which prints this message\n\
+  var helpText = `Send all messages to scrumbot on it's private channel.\n
+  Any text sent to scrumbot will be taken as your standup report except the commands
+  \`status\` which prints out the current report summary and \`help\` which prints this message.
   Please report any problems or bugs to team@redsift.com`
 
   var outOfChannelText = `Please help keep the general channel clear by only talking to me on my private channel`
