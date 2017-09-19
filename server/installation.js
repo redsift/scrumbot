@@ -30,25 +30,6 @@ module.exports = function(got) {
   } catch (ex) {
     console.error('meetingcall: Exception: ', ex);
   }
-  //Setting defaults
-  results.push({
-    name: "settings",
-    key: "settings",
-    value: {
-      tz: "US/Eastern",
-      startOfDay: "9",
-      meetingCall: "11"
-    }
-  });
-  results.push({
-    name: "settingsExport",
-    key: "settings",
-    value: {
-      tz: "US/Eastern",
-      startOfDay: "9",
-      meetingCall: "11"
-    }
-  })
 
   return results;
 };

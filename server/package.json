@@ -6,6 +6,8 @@
   "version": "1.0.0",
   "#": "Please use 'redsift npm' instead of system 'npm' ",
   "dependencies": {
-    "request-promise": "^3.0.0"
-  }
+    "request-promise": "^3.0.0",
+    "cli-color": "^1.2.0",
+    "moment-timezone": "^0.5.13"
+   }
 }

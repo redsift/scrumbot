@@ -54,26 +54,7 @@
         }
       }
     },
-    "nodes": [
-
-      {
-        "#": "Installation",
-        "implementation": {
-          "shared": true,
-          "javascript": "server/installation.js"
-        },
-        "input": {
-          "bucket": "credentials",
-          "select": "slack/bot_access_token"
-        },
-        "outputs": {
-          "reports": {},
-          "currentSummary": {},
-          "settings": {},
-          "settingsExport": {}
-        }
-      },
-      {
+    "nodes": [{
         "#": "Process Settings",
         "implementation": {
           "shared": true,
@@ -88,25 +69,34 @@
         }
       },
       {
-        "#": "Heartbeat",
+        "#": "Hourly Cron",
         "implementation": {
           "javascript": "server/cron.js",
           "when": {
-            "crontab": "*/5 * * * 1-5"
-
+            "crontab": "1 * * * 1-5",
+            "run": {
+              "install": true,
+              "update": false
+            }
           }
         },
         "input": {
           "bucket": "reports",
           "select": "*",
+          "computeOnEmptySelect": true,
           "lookup": [{
+            "bucket": "credentials",
+            "key": "slack/bot_access_token"
+          }, {
             "bucket": "settings",
             "key": "settings"
           }]
         },
         "outputs": {
           "reports": {},
-          "currentSummary": {}
+          "currentSummary": {},
+          "settings": {},
+          "settingsExport": {}
         }
       },
       {
