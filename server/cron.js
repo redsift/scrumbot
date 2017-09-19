@@ -60,7 +60,7 @@ module.exports = function(got) {
     results.push({
       name: "settingsExport",
       key: "settings",
-      value: "settings"
+      value: settings
     });
   }
 
