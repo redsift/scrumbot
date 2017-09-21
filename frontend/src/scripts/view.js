@@ -41,13 +41,17 @@ export default class MyView extends SiftView {
       console.log("SUBMIT ", e);
       e.preventDefault()
       let form = document.forms[0];
-
-      // console.log("FORM STUFF ", form.tz.value);
-      that.publish('wpm', {
-        tz: form.tz.value,
-        startOfDay: form['start-of-day'].value,
-        meetingCall: form['meeting-call'].value
-      });
+      let start = form['start-of-day'].value;
+      let call = form['meeting-call'].value;
+      if(parseInt(call)<parseInt(start)) {
+        alert("Meeting call time must be the same as or after start of day");
+      } else {
+        that.publish('wpm', {
+          tz: form.tz.value,
+          startOfDay: start,
+          meetingCall: call
+        });
+      }
     })
   };
 

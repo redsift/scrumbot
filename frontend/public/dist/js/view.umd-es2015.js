@@ -108,13 +108,17 @@
 	        console.log("SUBMIT ", e);
 	        e.preventDefault();
 	        var form = document.forms[0];
-	
-	        // console.log("FORM STUFF ", form.tz.value);
-	        that.publish('wpm', {
-	          tz: form.tz.value,
-	          startOfDay: form['start-of-day'].value,
-	          meetingCall: form['meeting-call'].value
-	        });
+	        var start = form['start-of-day'].value;
+	        var call = form['meeting-call'].value;
+	        if (parseInt(call) < parseInt(start)) {
+	          alert("Meeting call time must be the same as or after start of day");
+	        } else {
+	          that.publish('wpm', {
+	            tz: form.tz.value,
+	            startOfDay: start,
+	            meetingCall: call
+	          });
+	        }
 	      });
 	    }
 	  }, {
