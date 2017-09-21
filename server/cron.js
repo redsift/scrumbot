@@ -118,7 +118,8 @@ module.exports = function(got) {
       console.error('meetingcall: Exception: ', ex);
     }
   }
+  finally {
+    return results;
+  }
 
-
-  return results;
 };
