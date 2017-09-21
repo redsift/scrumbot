@@ -32,11 +32,11 @@ module.exports = function(got) {
   lookupData.forEach(function(d) {
     //Get settings and slack token.
     console.log('LK ITEM', d.data);
-    if (d.data.key == 'settings') {
+    if (d.data.key == 'settings' && d.data.value) {
       settings = JSON.parse(d.data.value);
     }
 
-    if (d.data.key == 'slack/bot_access_token') {
+    if (d.data.key == 'slack/bot_access_token' && d.data.value) {
       botToken = d.data.value.toString();
       console.log("BT ", botToken)
     }
@@ -60,7 +60,7 @@ module.exports = function(got) {
     results.push({
       name: "settingsExport",
       key: "settings",
-      value: settings
+      value: "settings"
     });
   }
 
