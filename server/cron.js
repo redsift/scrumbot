@@ -117,9 +117,12 @@ module.exports = function(got) {
     } catch (ex) {
       console.error('meetingcall: Exception: ', ex);
     }
-  }
-  finally {
+    finally {
+      return results;
+    }
+  } else {
     return results;
   }
+
 
 };
