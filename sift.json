@@ -73,7 +73,7 @@
         "implementation": {
           "javascript": "server/cron.js",
           "when": {
-            "crontab": "1 * * * 1-5",
+            "crontab": "0 * * * 1-5",
             "run": {
               "install": true,
               "update": false
