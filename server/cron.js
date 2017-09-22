@@ -92,7 +92,7 @@ module.exports = function(got) {
         });
       } else {
         //No one joined team yet, send out hello message
-        console.log("NOONE ON TEAM");
+        console.log("No one on team");
         let timezoneMessage = `\nYour current timezone is ${now.format('zz')}, your workday starts at ${settings.startOfDay} o'clock and I'll send out a meeting call at ${settings.meetingCall} o'clock.`;
         let settingsMsg = "\nYour administrator can change these settings on your <https://dashboard.redsift.cloud/dashboard|Red Sift dashboard>.";
         outgoingMessage = initialMsg + timezoneMessage + settingsMsg;
