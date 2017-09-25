@@ -69,13 +69,43 @@
         }
       },
       {
+        "#": "Installation",
+        "implementation": {
+          "javascript": "server/installation.js",
+          "when": {
+            "run": {
+              "install": true,
+              "update": false
+            }
+          }
+        },
+        "outputs": {
+          "settings": {},
+          "settingsExport": {}
+        }
+      },
+      {
+        "#": "Slack OAuth",
+        "implementation": {
+          "javascript": "server/slack_oauth.js"
+        },
+        "input": {
+          "bucket": "credentials",
+          "select": "slack/bot_access_token",
+          "lookup": [{
+            "bucket": "settings",
+            "key": "settings"
+          }]
+        }
+      },
+      {
         "#": "Hourly Cron",
         "implementation": {
           "javascript": "server/cron.js",
           "when": {
             "crontab": "0 * * * 1-5",
             "run": {
-              "install": true,
+              "install": false,
               "update": false
             }
           }
@@ -94,9 +124,7 @@
         },
         "outputs": {
           "reports": {},
-          "currentSummary": {},
-          "settings": {},
-          "settingsExport": {}
+          "currentSummary": {}
         }
       },
       {

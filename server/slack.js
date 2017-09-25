@@ -18,7 +18,7 @@ function postMessage(channel, text, attachments, botToken) {
       qs: {
         token: botToken,
         channel: channel,
-        as_user: false,
+        as_user: true,
         parse: "none",
         unfurl_links: false
       },
@@ -60,7 +60,7 @@ function updateMessage(channel, ts, text, attachments, botToken) {
         token: botToken,
         channel: channel,
         ts: ts,
-        as_user: false,
+        as_user: true,
         parse: "none",
         unfurl_links: false
       },
