@@ -41,28 +41,7 @@ module.exports = function(got) {
       console.log("BT ", botToken)
     }
   });
-  // Initialize settings if not found.
-  // if (settings) {
-  //   console.log(clc.magenta("SETTINGS"), settings);
-  // } else {
-  //   //Setting defaults
-  //   console.log(clc.red("INIT SETTINGS"))
-  //   settings = {
-  //     tz: "US/Eastern",
-  //     startOfDay: "9",
-  //     meetingCall: "11"
-  //   };
-  //   results.push({
-  //     name: "settings",
-  //     key: "settings",
-  //     value: settings
-  //   });
-  //   results.push({
-  //     name: "settingsExport",
-  //     key: "settings",
-  //     value: settings
-  //   });
-  // }
+
 
   var now = moment.tz(settings.tz);
   console.log("LOCAL TIME ", now.format('MMMM Do YYYY, h:mm:ss a zz'));
