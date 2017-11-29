@@ -35,6 +35,13 @@ module.exports = function(got) {
     if (d.data.key == 'settings' && d.data.value) {
       settings = JSON.parse(d.data.value);
     }
+    if(settings == null) {
+      settings = {
+        tz: "US/Eastern",
+        startOfDay: "9",
+        meetingCall: "11"
+      };
+    }
 
     if (d.data.key == 'slack/bot_access_token' && d.data.value) {
       botToken = d.data.value.toString();
