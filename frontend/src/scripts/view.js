@@ -15,6 +15,19 @@ export default class MyView extends SiftView {
 
   }
 
+  showSlackAuthUI() {
+    const topic = 'showSlackAuth';
+    const value = {};
+
+    this._proxy.postMessage({
+      method: 'notifyClient',
+      params: {
+        topic: topic,
+        value: value
+      }
+    },
+    '*');
+  }
 
   // for more info: http://docs.redsift.com/docs/client-code-siftview
   presentView(value) {
@@ -33,6 +46,12 @@ export default class MyView extends SiftView {
     //   this.publish('wpm', e.target.value);
     // })
 
+    const showAuth = this.showSlackAuthUI.bind(this);
+
+    $('#oauth_button').on('click', function() {
+      console.log('clicked');
+      showAuth();
+    })
   };
 
   formHandler() {
