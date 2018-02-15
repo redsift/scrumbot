@@ -18,7 +18,7 @@
   },
   "interfaces": {
     "summary": {
-      "controller": "dist/js/controller.umd-es2015.min.js"
+      "controller": "dist/js/controller.umd-es2015.js"
     }
   },
   "dag": {
