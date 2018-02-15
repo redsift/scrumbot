@@ -11,10 +11,27 @@ export default class MyView extends SiftView {
     // You have to call the super() method to initialize the base class.
     super();
     this.controller.subscribe('settings', this.onSettings.bind(this));
+    this.controller.subscribe('bot_configured', this.onBotConfigured.bind(this));
     window.addEventListener('load', this.formHandler.bind(this))
 
+    this.showSlackAuthUI = this.showSlackAuthUI.bind(this);
   }
 
+  showSlackAuthUI() {
+    console.log('showSlackAuthUI called');
+
+    const topic = 'showSlackAuth';
+    const value = {};
+
+    this._proxy.postMessage({
+      method: 'notifyClient',
+      params: {
+        topic: topic,
+        value: value
+      }
+    },
+    '*');
+  }
 
   // for more info: http://docs.redsift.com/docs/client-code-siftview
   presentView(value) {
@@ -25,14 +42,10 @@ export default class MyView extends SiftView {
     $('.selectpicker').selectpicker('refresh')
     $('select[name=meeting-call').val(value.data.settings.meetingCall);
     $('.selectpicker').selectpicker('refresh');
-    //document.getElementById("tz1").val = value.data.settings.tz;
-    //document.getElementById("tz1").selectpicker('refresh') ;
-    //document.getElementById("settings-form").action = value.data.hook_uri;
-    // document.getElementById("settings-form").addEventListener("submit", function(e){
-    //   console.log("SUBMIT ", e, this);
-    //   this.publish('wpm', e.target.value);
-    // })
 
+    const { bot_configured } = value;
+
+    this.setupUI({ bot_configured });
   };
 
   formHandler() {
@@ -60,6 +73,21 @@ export default class MyView extends SiftView {
 
   };
 
+  setupUI({ bot_configured }) {
+    if (bot_configured) {
+      $('#configured').css('display', 'block');
+      $('#notConfigured').css('display', 'none');
+    } else {
+      document.querySelector('#signupBtn').addEventListener('click', (e) => {
+        console.log('clicked connect button');
+        this.showSlackAuthUI();
+      });
+
+      $('#configured').css('display', 'none');
+      $('#notConfigured').css('display', 'flex');
+    }
+  }
+
   onSettings(data) {
     let settings = data;
     console.log('scrumbot: onSettings view: ', settings);
@@ -70,6 +98,12 @@ export default class MyView extends SiftView {
     $('select[name=meeting-call').val(parseInt(settings.meetingCall));
     $('.selectpicker').selectpicker('refresh');
   }
+
+  onBotConfigured(bot_configured) {
+    console.log('scrumbot: onBotConfigured view: ', bot_configured);
+
+    this.setupUI({ bot_configured });
+  }  
 
 }
 

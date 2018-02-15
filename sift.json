@@ -85,9 +85,24 @@
         }
       },
       {
+        "#": "Slack Signups",
+        "implementation": {
+          "shared": true,
+          "javascript": "server/slack-signup.js"
+        },
+        "input": {
+          "bucket": "server",
+          "select": "slack/*"
+        },
+        "outputs": {
+          "intent": {},
+          "slack_info": {}
+        }
+      },      
+      {
         "#": "Slack OAuth",
         "implementation": {
-          "javascript": "server/slack_oauth.js"
+          "javascript": "server/slack-oauth.js"
         },
         "input": {
           "bucket": "credentials",

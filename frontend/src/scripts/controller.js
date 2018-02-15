@@ -32,18 +32,21 @@ export default class MyController extends SiftController {
   loadView(state) {
     console.log('scrumbot: loadView', state);
     // Register for storage update events on the "x" bucket so we can update the UI
-    this.storage.subscribe(['settingsExport'], this._suHandler);
+    this.storage.subscribe(['slack_info', 'settingsExport'], this._suHandler);
     switch (state.type) {
       case 'summary':
-        let wh = this.getWebhook();
-        let settings = this.getSettings();
+        const wh = this.getWebhook();
+        const settings = this.getSettings();
+        const slackInfo = this.getSlackInfo();
+
         return {
           html: 'summary.html',
-          data: Promise.all([wh, settings]).then(values => {
+          data: Promise.all([wh, settings, slackInfo]).then(values => {
               // console.log("PROMISES ", values)
               return {
                 webhookUri: values[0],
-                settings: JSON.parse(values[1].name)
+                settings: JSON.parse(values[1].name),
+                bot_configured: values[2].bot_configured,
               }})
           };
 
@@ -54,12 +57,22 @@ export default class MyController extends SiftController {
     // Event: storage update
     onStorageUpdate(value) {
       console.log('scrumbot: onStorageUpdate: ', value);
+
       return this.getSettings().then(xe => {
       //   // Publish events from settings to view
         let settings = JSON.parse(xe.name)
         console.log("OSU: ", settings)
         this.publish('settings', settings);
       });
+
+      return this.getSlackInfo().then(xe => {
+        console.log('xe:', xe);
+
+        //   // Publish events from settings to view
+          let bot_configured = JSON.parse(xe.bot_configured)
+          console.log("bot_configured: ", bot_configured)
+          this.publish('bot_configured', bot_configured);
+        });      
     }
 
     onFormSubmit(value) {
@@ -99,6 +112,18 @@ export default class MyController extends SiftController {
         console.log('scrumbot: getSettings returned:', values[0].value);
         return {
           name: values[0].value
+        };
+      });
+    }
+
+    getSlackInfo() {
+      return this.storage.get({
+        bucket: 'slack_info',
+        keys: ['slack-signed-up']
+      }).then((values) => {
+        console.log('scrumbot: getSlackInfo returned:', values[0].value);
+        return {
+          bot_configured: values[0].value
         };
       });
     }

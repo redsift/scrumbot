@@ -100,18 +100,21 @@
 	    value: function loadView(state) {
 	      console.log('scrumbot: loadView', state);
 	      // Register for storage update events on the "x" bucket so we can update the UI
-	      this.storage.subscribe(['settingsExport'], this._suHandler);
+	      this.storage.subscribe(['slack_info', 'settingsExport'], this._suHandler);
 	      switch (state.type) {
 	        case 'summary':
 	          var wh = this.getWebhook();
 	          var settings = this.getSettings();
+	          var slackInfo = this.getSlackInfo();
+	
 	          return {
 	            html: 'summary.html',
-	            data: Promise.all([wh, settings]).then(function (values) {
+	            data: Promise.all([wh, settings, slackInfo]).then(function (values) {
 	              // console.log("PROMISES ", values)
 	              return {
 	                webhookUri: values[0],
-	                settings: JSON.parse(values[1].name)
+	                settings: JSON.parse(values[1].name),
+	                bot_configured: values[2].bot_configured
 	              };
 	            })
 	          };
@@ -129,11 +132,21 @@
 	      var _this2 = this;
 	
 	      console.log('scrumbot: onStorageUpdate: ', value);
+	
 	      return this.getSettings().then(function (xe) {
 	        //   // Publish events from settings to view
 	        var settings = JSON.parse(xe.name);
 	        console.log("OSU: ", settings);
 	        _this2.publish('settings', settings);
+	      });
+	
+	      return this.getSlackInfo().then(function (xe) {
+	        console.log('xe:', xe);
+	
+	        //   // Publish events from settings to view
+	        var bot_configured = JSON.parse(xe.bot_configured);
+	        console.log("bot_configured: ", bot_configured);
+	        _this2.publish('bot_configured', bot_configured);
 	      });
 	    }
 	  }, {
@@ -176,6 +189,19 @@
 	        console.log('scrumbot: getSettings returned:', values[0].value);
 	        return {
 	          name: values[0].value
+	        };
+	      });
+	    }
+	  }, {
+	    key: 'getSlackInfo',
+	    value: function getSlackInfo() {
+	      return this.storage.get({
+	        bucket: 'slack_info',
+	        keys: ['slack-signed-up']
+	      }).then(function (values) {
+	        console.log('scrumbot: getSlackInfo returned:', values[0].value);
+	        return {
+	          bot_configured: values[0].value
 	        };
 	      });
 	    }

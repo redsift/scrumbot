@@ -74,15 +74,33 @@
 	
 	
 	    _this.controller.subscribe('settings', _this.onSettings.bind(_this));
+	    _this.controller.subscribe('bot_configured', _this.onBotConfigured.bind(_this));
 	    window.addEventListener('load', _this.formHandler.bind(_this));
 	
+	    _this.showSlackAuthUI = _this.showSlackAuthUI.bind(_this);
 	    return _this;
 	  }
 	
-	  // for more info: http://docs.redsift.com/docs/client-code-siftview
-	
-	
 	  _createClass(MyView, [{
+	    key: 'showSlackAuthUI',
+	    value: function showSlackAuthUI() {
+	      console.log('showSlackAuthUI called');
+	
+	      var topic = 'showSlackAuth';
+	      var value = {};
+	
+	      this._proxy.postMessage({
+	        method: 'notifyClient',
+	        params: {
+	          topic: topic,
+	          value: value
+	        }
+	      }, '*');
+	    }
+	
+	    // for more info: http://docs.redsift.com/docs/client-code-siftview
+	
+	  }, {
 	    key: 'presentView',
 	    value: function presentView(value) {
 	      console.log('scrumbot-sift: presentView: ', value.data.settings.tz);
@@ -92,13 +110,11 @@
 	      $('.selectpicker').selectpicker('refresh');
 	      $('select[name=meeting-call').val(value.data.settings.meetingCall);
 	      $('.selectpicker').selectpicker('refresh');
-	      //document.getElementById("tz1").val = value.data.settings.tz;
-	      //document.getElementById("tz1").selectpicker('refresh') ;
-	      //document.getElementById("settings-form").action = value.data.hook_uri;
-	      // document.getElementById("settings-form").addEventListener("submit", function(e){
-	      //   console.log("SUBMIT ", e, this);
-	      //   this.publish('wpm', e.target.value);
-	      // })
+	
+	      var bot_configured = value.bot_configured;
+	
+	
+	      this.setupUI({ bot_configured: bot_configured });
 	    }
 	  }, {
 	    key: 'formHandler',
@@ -127,6 +143,26 @@
 	      console.log('hello-sift: willPresentView: ', value);
 	    }
 	  }, {
+	    key: 'setupUI',
+	    value: function setupUI(_ref) {
+	      var _this2 = this;
+	
+	      var bot_configured = _ref.bot_configured;
+	
+	      if (bot_configured) {
+	        $('#configured').css('display', 'block');
+	        $('#notConfigured').css('display', 'none');
+	      } else {
+	        document.querySelector('#signupBtn').addEventListener('click', function (e) {
+	          console.log('clicked connect button');
+	          _this2.showSlackAuthUI();
+	        });
+	
+	        $('#configured').css('display', 'none');
+	        $('#notConfigured').css('display', 'flex');
+	      }
+	    }
+	  }, {
 	    key: 'onSettings',
 	    value: function onSettings(data) {
 	      var settings = data;
@@ -137,6 +173,13 @@
 	      $('.selectpicker').selectpicker('refresh');
 	      $('select[name=meeting-call').val(parseInt(settings.meetingCall));
 	      $('.selectpicker').selectpicker('refresh');
+	    }
+	  }, {
+	    key: 'onBotConfigured',
+	    value: function onBotConfigured(bot_configured) {
+	      console.log('scrumbot: onBotConfigured view: ', bot_configured);
+	
+	      this.setupUI({ bot_configured: bot_configured });
 	    }
 	  }]);
 	

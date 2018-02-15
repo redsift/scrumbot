@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Slackbot for daily standup meetings",
   "scripts": {
-    "build": "gulp build",
+    "build": "gulp",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
