@@ -65,7 +65,6 @@
 	
 	//import Webhook from './lib/webhook';
 	
-	
 	function _sendWebhook(url, key, value) {
 	  // console.log('sched-sift: _sendWebhook: ', url, key, value);
 	  var wh = new XMLHttpRequest();
@@ -110,12 +109,10 @@
 	          return {
 	            html: 'summary.html',
 	            data: Promise.all([wh, settings, slackInfo]).then(function (values) {
-	              console.log("PROMISES ", values);
-	              debugger;
 	              return {
 	                webhookUri: values[0],
-	                settings: values[1].name,
-	                bot_configured: values[2].bot_configured
+	                settings: values[1],
+	                slackInfo: values[2]
 	              };
 	            })
 	          };
@@ -134,24 +131,14 @@
 	
 	      console.log('scrumbot: onStorageUpdate: ', value);
 	
-	      return this.getSettings().then(function (xe) {
-	        debugger;
-	        //   // Publish events from settings to view
-	        var settings = JSON.parse(xe.name);
-	        console.log("OSU: ", settings);
+	      return this.getSettings().then(function (settings) {
+	        console.log('onStorageUpdate: settings: ', settings);
 	        _this2.publish('settings', settings);
 	      });
 	
-	      return this.getSlackInfo().then(function (xe) {
-	        console.log('xe:', xe);
-	        debugger;
-	
-	        //   // Publish events from settings to view
-	        var bot_configured = xe && xe.bot_configured ? JSON.parse(xe.bot_configured) : false;
-	
-	        console.log("bot_configured: ", bot_configured);
-	
-	        _this2.publish('bot_configured', bot_configured);
+	      return this.getSlackInfo().then(function (slackInfo) {
+	        console.log('onStorageUpdate: slackInfo:', slackInfo);
+	        _this2.publish('slackInfo', slackInfo);
 	      });
 	    }
 	  }, {
@@ -163,12 +150,7 @@
 	        keys: ['webhooks/settingsHook']
 	      }).then(function (wbr) {
 	        console.log('scrumbot: FormSubmit webhook url: ', wbr[0].value);
-	        // this._wpmSetting = value;
-	        // this.storage.putUser({ kvs: [{ key: 'wpm', value: value }] });
-	        // console.log("WEHHHH ", Webhook)
-	        // let wh = new Webhook(wbr[0].value);
-	        // wh.send('wpm', value);
-	        _sendWebhook(wbr[0].value, "settings", JSON.stringify(value));
+	        _sendWebhook(wbr[0].value, 'settings', JSON.stringify(value));
 	      }).catch(function (error) {
 	        console.error('scrumbot: FormSubmit: ', error);
 	      });
@@ -180,7 +162,6 @@
 	        bucket: '_redsift',
 	        keys: ['webhooks/settingsHook']
 	      }).then(function (d) {
-	        // console.log("WH", d[0])
 	        return d[0].value;
 	      });
 	    }
@@ -192,9 +173,7 @@
 	        keys: ['settings']
 	      }).then(function (values) {
 	        console.log('scrumbot: getSettings returned:', values[0].value);
-	        return {
-	          name: values[0].value
-	        };
+	        return values[0].value ? JSON.parse(values[0].value) : null;
 	      });
 	    }
 	  }, {
@@ -205,9 +184,7 @@
 	        keys: ['slack-signed-up']
 	      }).then(function (values) {
 	        console.log('scrumbot: getSlackInfo returned:', values[0].value);
-	        return {
-	          bot_configured: values[0].value
-	        };
+	        return values[0].value ? JSON.parse(values[0].value) : null;
 	      });
 	    }
 	  }]);

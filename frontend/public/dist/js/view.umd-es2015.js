@@ -73,21 +73,24 @@
 	    // You have to call the super() method to initialize the base class.
 	
 	
-	    _this.controller.subscribe('settings', _this.onSettings.bind(_this));
-	    _this.controller.subscribe('bot_configured', _this.onBotConfigured.bind(_this));
+	    _this.controller.subscribe('settings', _this._onSettings.bind(_this));
+	    _this.controller.subscribe('slackInfo', _this._onSlackInfo.bind(_this));
+	
 	    window.addEventListener('load', _this.formHandler.bind(_this));
+	    _this._showSlackAuthUI = _this._showSlackAuthUI.bind(_this);
 	
-	    _this.bot_configured = false;
-	    _this.settings = null;
-	
-	    _this.showSlackAuthUI = _this.showSlackAuthUI.bind(_this);
+	    _this._slackInfo = false;
+	    _this._settings = null;
 	    return _this;
 	  }
 	
+	  // TODO:move into @redsift/sift-sdk-web!
+	
+	
 	  _createClass(MyView, [{
-	    key: 'showSlackAuthUI',
-	    value: function showSlackAuthUI() {
-	      console.log('showSlackAuthUI called');
+	    key: '_showSlackAuthUI',
+	    value: function _showSlackAuthUI() {
+	      console.log('_showSlackAuthUI called');
 	
 	      var topic = 'showSlackAuth';
 	      var value = {};
@@ -108,27 +111,30 @@
 	    value: function presentView(value) {
 	      console.log('scrumbot-sift: presentView: ', value);
 	
-	      var bot_configured = value.bot_configured,
-	          settings = value.data.settings;
+	      debugger;
+	
+	      var _value$data = value.data,
+	          slackInfo = _value$data.slackInfo,
+	          settings = _value$data.settings;
 	
 	
-	      this.bot_configured = bot_configured;
-	      this.settings = settings;
+	      this._slackInfo = slackInfo;
+	      this._settings = settings;
 	
-	      this.setupUI({ bot_configured: bot_configured, settings: settings });
+	      this.setupUI({ slackInfo: slackInfo, settings: settings });
 	    }
 	  }, {
 	    key: 'formHandler',
 	    value: function formHandler() {
 	      var that = this;
-	      document.getElementById("settings-form").addEventListener("submit", function (e) {
-	        console.log("SUBMIT ", e);
+	      document.querySelector('#settings-form').addEventListener('submit', function (e) {
 	        e.preventDefault();
+	
 	        var form = document.forms[0];
 	        var start = form['start-of-day'].value;
 	        var call = form['meeting-call'].value;
 	        if (parseInt(call) < parseInt(start)) {
-	          alert("Meeting call time must be the same as or after start of day");
+	          alert('Meeting call time must be the same as or after start of day');
 	        } else {
 	          that.publish('wpm', {
 	            tz: form.tz.value,
@@ -148,10 +154,10 @@
 	    value: function setupUI(_ref) {
 	      var _this2 = this;
 	
-	      var bot_configured = _ref.bot_configured,
+	      var slackInfo = _ref.slackInfo,
 	          settings = _ref.settings;
 	
-	      if (bot_configured) {
+	      if (slackInfo) {
 	        $('select[name=tz]').val(settings.tz);
 	        $('.selectpicker').selectpicker('refresh');
 	        $('select[name=start-of-day]').val(settings.startOfDay);
@@ -164,7 +170,7 @@
 	      } else {
 	        document.querySelector('#signupBtn').addEventListener('click', function (e) {
 	          console.log('clicked connect button');
-	          _this2.showSlackAuthUI();
+	          _this2._showSlackAuthUI();
 	        });
 	
 	        $('#configured').css('display', 'none');
@@ -172,22 +178,22 @@
 	      }
 	    }
 	  }, {
-	    key: 'onSettings',
-	    value: function onSettings(settings) {
-	      console.log('scrumbot: onSettings view: ', settings);
+	    key: '_onSettings',
+	    value: function _onSettings(settings) {
+	      console.log('scrumbot: _onSettings view: ', settings);
 	
-	      this.settings = settings;
+	      this._settings = settings;
 	
-	      this.setupUI({ bot_configured: this.bot_configured, settings: settings });
+	      this.setupUI({ slackInfo: this._slackInfo, settings: settings });
 	    }
 	  }, {
-	    key: 'onBotConfigured',
-	    value: function onBotConfigured(bot_configured) {
-	      console.log('scrumbot: onBotConfigured view: ', bot_configured);
+	    key: '_onSlackInfo',
+	    value: function _onSlackInfo(slackInfo) {
+	      console.log('scrumbot: _onSlackInfo view: ', slackInfo);
 	
-	      this.bot_configured = bot_configured;
+	      this._slackInfo = slackInfo;
 	
-	      this.setupUI({ bot_configured: bot_configured, settings: this.settings });
+	      this.setupUI({ slackInfo: slackInfo, settings: this._settings });
 	    }
 	  }]);
 	
