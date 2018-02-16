@@ -54,6 +54,8 @@
 	
 	var _siftSdkWeb = __webpack_require__(8);
 	
+	function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -97,32 +99,61 @@
 	
 	  _createClass(MyController, [{
 	    key: 'loadView',
-	    value: function loadView(state) {
-	      console.log('scrumbot: loadView', state);
-	      // Register for storage update events on the "x" bucket so we can update the UI
-	      this.storage.subscribe(['slack_info', 'settingsExport'], this._suHandler);
-	      switch (state.type) {
-	        case 'summary':
-	          var wh = this.getWebhook();
-	          var settings = this.getSettings();
-	          var slackInfo = this.getSlackInfo();
+	    value: function () {
+	      var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(state) {
+	        var wh, settings, slackInfo;
+	        return regeneratorRuntime.wrap(function _callee$(_context) {
+	          while (1) {
+	            switch (_context.prev = _context.next) {
+	              case 0:
+	                console.log('scrumbot: loadView', state);
+	                // Register for storage update events on the "x" bucket so we can update the UI
+	                this.storage.subscribe(['slack_info', 'settingsExport'], this._suHandler);
+	                _context.t0 = state.type;
+	                _context.next = _context.t0 === 'summary' ? 5 : 13;
+	                break;
 	
-	          return {
-	            html: 'summary.html',
-	            data: Promise.all([wh, settings, slackInfo]).then(function (values) {
-	              // console.log("PROMISES ", values)
-	              return {
-	                webhookUri: values[0],
-	                settings: JSON.parse(values[1].name),
-	                bot_configured: values[2].bot_configured
-	              };
-	            })
-	          };
+	              case 5:
+	                wh = this.getWebhook();
+	                _context.next = 8;
+	                return this.getSettings();
 	
-	        default:
-	          console.error('scrumbot: unknown Sift type: ', state.type);
+	              case 8:
+	                settings = _context.sent;
+	                _context.next = 11;
+	                return this.getSlackInfo();
+	
+	              case 11:
+	                slackInfo = _context.sent;
+	                return _context.abrupt('return', {
+	                  html: 'summary.html',
+	                  data: Promise.all([wh, settings, slackInfo]).then(function (values) {
+	                    // console.log("PROMISES ", values)
+	                    return {
+	                      webhookUri: values[0],
+	                      settings: JSON.parse(values[1].name),
+	                      bot_configured: values[2].bot_configured
+	                    };
+	                  })
+	                });
+	
+	              case 13:
+	                console.error('scrumbot: unknown Sift type: ', state.type);
+	
+	              case 14:
+	              case 'end':
+	                return _context.stop();
+	            }
+	          }
+	        }, _callee, this);
+	      }));
+	
+	      function loadView(_x) {
+	        return _ref.apply(this, arguments);
 	      }
-	    }
+	
+	      return loadView;
+	    }()
 	
 	    // Event: storage update
 	

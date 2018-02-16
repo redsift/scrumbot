@@ -4,6 +4,7 @@
   "description": "Slackbot for daily standup meetings",
   "scripts": {
     "build": "gulp",
+    "build:css": "NODE_ENV=production node ./scripts/build-css",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
@@ -13,8 +14,19 @@
     "jquery": "3.2.1"
   },
   "devDependencies": {
-    "@redsift/sift-sdk-web": "0.7.0",
-    "@redsift/redsift-bundler": "0.7.3",
-    "gulp": "^3.9.1"
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "css-loader": "^0.28.9",
+    "cssnano": "^3.10.0",
+    "gulp": "^3.9.1",
+    "gulp-color": "0.0.1",
+    "postcss": "^6.0.18",
+    "postcss-cssnext": "^3.1.0",
+    "postcss-easy-import": "^3.0.0",
+    "postcss-load-config": "^1.2.0",
+    "postcss-loader": "^2.1.0",
+    "pretty-bytes": "^4.0.2"
   }
 }

@@ -95,7 +95,6 @@
           "select": "slack/*"
         },
         "outputs": {
-          "intent": {},
           "slack_info": {}
         }
       },      
@@ -194,6 +193,9 @@
       }
     ],
     "stores": {
+      "server": {
+        "import": "_server"
+      },
       "settings": {
         "key$schema": "string"
       },
@@ -215,6 +217,9 @@
     "outputs": {
       "exports": {
         "settingsExport": {
+          "key$schema": "string"
+        },
+        "slack_info": {
           "key$schema": "string"
         }
       }

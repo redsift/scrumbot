@@ -15,7 +15,7 @@ module.exports = function (got) {
   inData.data.map(datum => {
     if(datum.key === 'slack/team_name') {
       rpcValue.team_name = datum.value.toString();
-      ret.push({ name: 'intent', key: 'intent/_', value: { type: 'event', method: 'slackSignedUp' } });
+      // ret.push({ name: 'intent', key: 'intent/_', value: { type: 'event', method: 'slackSignedUp' } });
     }
   });
   ret.push({name: 'slack_info', key: 'slack-signed-up', value: rpcValue });
