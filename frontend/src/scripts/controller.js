@@ -42,10 +42,11 @@ export default class MyController extends SiftController {
         return {
           html: 'summary.html',
           data: Promise.all([wh, settings, slackInfo]).then(values => {
-              // console.log("PROMISES ", values)
+              console.log("PROMISES ", values)
+              debugger;
               return {
                 webhookUri: values[0],
-                settings: JSON.parse(values[1].name),
+                settings: values[1].name,
                 bot_configured: values[2].bot_configured,
               }})
           };
@@ -59,6 +60,7 @@ export default class MyController extends SiftController {
       console.log('scrumbot: onStorageUpdate: ', value);
 
       return this.getSettings().then(xe => {
+        debugger;
       //   // Publish events from settings to view
         let settings = JSON.parse(xe.name)
         console.log("OSU: ", settings)
@@ -67,10 +69,13 @@ export default class MyController extends SiftController {
 
       return this.getSlackInfo().then(xe => {
         console.log('xe:', xe);
+        debugger;
 
         //   // Publish events from settings to view
-          let bot_configured = JSON.parse(xe.bot_configured)
+          let bot_configured = xe && xe.bot_configured ? JSON.parse(xe.bot_configured) : false;
+
           console.log("bot_configured: ", bot_configured)
+
           this.publish('bot_configured', bot_configured);
         });      
     }

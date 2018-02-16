@@ -77,6 +77,9 @@
 	    _this.controller.subscribe('bot_configured', _this.onBotConfigured.bind(_this));
 	    window.addEventListener('load', _this.formHandler.bind(_this));
 	
+	    _this.bot_configured = false;
+	    _this.settings = null;
+	
 	    _this.showSlackAuthUI = _this.showSlackAuthUI.bind(_this);
 	    return _this;
 	  }
@@ -103,18 +106,16 @@
 	  }, {
 	    key: 'presentView',
 	    value: function presentView(value) {
-	      console.log('scrumbot-sift: presentView: ', value.data.settings.tz);
-	      $('select[name=tz]').val(value.data.settings.tz);
-	      $('.selectpicker').selectpicker('refresh');
-	      $('select[name=start-of-day]').val(value.data.settings.startOfDay);
-	      $('.selectpicker').selectpicker('refresh');
-	      $('select[name=meeting-call').val(value.data.settings.meetingCall);
-	      $('.selectpicker').selectpicker('refresh');
+	      console.log('scrumbot-sift: presentView: ', value);
 	
-	      var bot_configured = value.bot_configured;
+	      var bot_configured = value.bot_configured,
+	          settings = value.data.settings;
 	
 	
-	      this.setupUI({ bot_configured: bot_configured });
+	      this.bot_configured = bot_configured;
+	      this.settings = settings;
+	
+	      this.setupUI({ bot_configured: bot_configured, settings: settings });
 	    }
 	  }, {
 	    key: 'formHandler',
@@ -147,9 +148,17 @@
 	    value: function setupUI(_ref) {
 	      var _this2 = this;
 	
-	      var bot_configured = _ref.bot_configured;
+	      var bot_configured = _ref.bot_configured,
+	          settings = _ref.settings;
 	
 	      if (bot_configured) {
+	        $('select[name=tz]').val(settings.tz);
+	        $('.selectpicker').selectpicker('refresh');
+	        $('select[name=start-of-day]').val(settings.startOfDay);
+	        $('.selectpicker').selectpicker('refresh');
+	        $('select[name=meeting-call').val(settings.meetingCall);
+	        $('.selectpicker').selectpicker('refresh');
+	
 	        $('#configured').css('display', 'block');
 	        $('#notConfigured').css('display', 'none');
 	      } else {
@@ -164,22 +173,21 @@
 	    }
 	  }, {
 	    key: 'onSettings',
-	    value: function onSettings(data) {
-	      var settings = data;
+	    value: function onSettings(settings) {
 	      console.log('scrumbot: onSettings view: ', settings);
-	      $('select[name=tz]').val(settings.tz);
-	      $('.selectpicker').selectpicker('refresh');
-	      $('select[name=start-of-day]').val(parseInt(settings.startOfDay));
-	      $('.selectpicker').selectpicker('refresh');
-	      $('select[name=meeting-call').val(parseInt(settings.meetingCall));
-	      $('.selectpicker').selectpicker('refresh');
+	
+	      this.settings = settings;
+	
+	      this.setupUI({ bot_configured: this.bot_configured, settings: settings });
 	    }
 	  }, {
 	    key: 'onBotConfigured',
 	    value: function onBotConfigured(bot_configured) {
 	      console.log('scrumbot: onBotConfigured view: ', bot_configured);
 	
-	      this.setupUI({ bot_configured: bot_configured });
+	      this.bot_configured = bot_configured;
+	
+	      this.setupUI({ bot_configured: bot_configured, settings: this.settings });
 	    }
 	  }]);
 	

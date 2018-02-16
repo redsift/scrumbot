@@ -14,6 +14,9 @@ export default class MyView extends SiftView {
     this.controller.subscribe('bot_configured', this.onBotConfigured.bind(this));
     window.addEventListener('load', this.formHandler.bind(this))
 
+    this.bot_configured = false;
+    this.settings = null;
+
     this.showSlackAuthUI = this.showSlackAuthUI.bind(this);
   }
 
@@ -35,17 +38,14 @@ export default class MyView extends SiftView {
 
   // for more info: http://docs.redsift.com/docs/client-code-siftview
   presentView(value) {
-    console.log('scrumbot-sift: presentView: ', value.data.settings.tz);
-    $('select[name=tz]').val(value.data.settings.tz);
-    $('.selectpicker').selectpicker('refresh')
-    $('select[name=start-of-day]').val(value.data.settings.startOfDay);
-    $('.selectpicker').selectpicker('refresh')
-    $('select[name=meeting-call').val(value.data.settings.meetingCall);
-    $('.selectpicker').selectpicker('refresh');
+    console.log('scrumbot-sift: presentView: ', value);
 
-    const { bot_configured } = value;
+    const { bot_configured, data: { settings } } = value;
 
-    this.setupUI({ bot_configured });
+    this.bot_configured = bot_configured;
+    this.settings = settings;
+
+    this.setupUI({ bot_configured, settings });
   };
 
   formHandler() {
@@ -73,8 +73,16 @@ export default class MyView extends SiftView {
 
   };
 
-  setupUI({ bot_configured }) {
+  setupUI({ bot_configured, settings }) {
     if (bot_configured) {
+      $('select[name=tz]').val(settings.tz);
+      $('.selectpicker').selectpicker('refresh')
+      $('select[name=start-of-day]').val(settings.startOfDay);
+      $('.selectpicker').selectpicker('refresh')
+      $('select[name=meeting-call').val(settings.meetingCall);
+      $('.selectpicker').selectpicker('refresh');
+
+
       $('#configured').css('display', 'block');
       $('#notConfigured').css('display', 'none');
     } else {
@@ -88,21 +96,20 @@ export default class MyView extends SiftView {
     }
   }
 
-  onSettings(data) {
-    let settings = data;
+  onSettings(settings) {
     console.log('scrumbot: onSettings view: ', settings);
-    $('select[name=tz]').val(settings.tz);
-    $('.selectpicker').selectpicker('refresh')
-    $('select[name=start-of-day]').val(parseInt(settings.startOfDay));
-    $('.selectpicker').selectpicker('refresh')
-    $('select[name=meeting-call').val(parseInt(settings.meetingCall));
-    $('.selectpicker').selectpicker('refresh');
+
+    this.settings = settings;
+
+    this.setupUI({ bot_configured: this.bot_configured, settings });
   }
 
   onBotConfigured(bot_configured) {
     console.log('scrumbot: onBotConfigured view: ', bot_configured);
 
-    this.setupUI({ bot_configured });
+    this.bot_configured = bot_configured;
+
+    this.setupUI({ bot_configured, settings: this.settings });
   }  
 
 }

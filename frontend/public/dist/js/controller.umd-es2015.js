@@ -110,10 +110,11 @@
 	          return {
 	            html: 'summary.html',
 	            data: Promise.all([wh, settings, slackInfo]).then(function (values) {
-	              // console.log("PROMISES ", values)
+	              console.log("PROMISES ", values);
+	              debugger;
 	              return {
 	                webhookUri: values[0],
-	                settings: JSON.parse(values[1].name),
+	                settings: values[1].name,
 	                bot_configured: values[2].bot_configured
 	              };
 	            })
@@ -134,6 +135,7 @@
 	      console.log('scrumbot: onStorageUpdate: ', value);
 	
 	      return this.getSettings().then(function (xe) {
+	        debugger;
 	        //   // Publish events from settings to view
 	        var settings = JSON.parse(xe.name);
 	        console.log("OSU: ", settings);
@@ -142,10 +144,13 @@
 	
 	      return this.getSlackInfo().then(function (xe) {
 	        console.log('xe:', xe);
+	        debugger;
 	
 	        //   // Publish events from settings to view
-	        var bot_configured = JSON.parse(xe.bot_configured);
+	        var bot_configured = xe && xe.bot_configured ? JSON.parse(xe.bot_configured) : false;
+	
 	        console.log("bot_configured: ", bot_configured);
+	
 	        _this2.publish('bot_configured', bot_configured);
 	      });
 	    }
