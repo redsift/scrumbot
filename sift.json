@@ -28,7 +28,14 @@
           "ambientMentionDuration": 300,
           "permission": "team"
         },
-        "slack": {
+        "all": {
+          "_config": {
+            "oauth": {
+              "clientID": "_SLACK_CLIENT_ID",
+              "clientSecret": "_SLACK_CLIENT_SECRET",
+              "scope": "SLACK_CLIENT_SCOPE"
+            }
+          },
           "filter": {
             "conditions": [{
                 "type": "message:direct_mention,direct_message,mention"
