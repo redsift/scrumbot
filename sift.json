@@ -31,6 +31,7 @@
         "all": {
           "_config": {
             "oauth": {
+              "provider": "slack",
               "clientID": "_SLACK_CLIENT_ID",
               "clientSecret": "_SLACK_CLIENT_SECRET",
               "scope": "SLACK_CLIENT_SCOPE"
