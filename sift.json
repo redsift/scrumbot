@@ -156,7 +156,7 @@
           "javascript": "server/messages.js"
         },
         "input": {
-          "bucket": "slack",
+          "bucket": "all",
           "lookup": [{
               "bucket": "credentials",
               "key": "slack/bot_access_token"
