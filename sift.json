@@ -99,13 +99,13 @@
           "javascript": "server/slack-signup.js"
         },
         "input": {
-          "bucket": "server",
+          "bucket": "credentials",
           "select": "slack/*"
         },
         "outputs": {
           "slack_info": {}
         }
-      },      
+      },
       {
         "#": "Slack OAuth",
         "implementation": {
