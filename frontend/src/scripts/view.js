@@ -74,11 +74,13 @@ export default class MyView extends SiftView {
   }
 
   willPresentView(value) {
-    console.log('hello-sift: willPresentView: ', value);
+    console.log('scrumbot: willPresentView: ', value);
   }
 
   setupUI({ slackInfo, settings }) {
-    if (slackInfo && settings) {
+    console.log('scrumbot: setupUI: ', slackInfo, settings);
+
+    if (settings) {
       $('select[name=tz]').val(settings.tz);
       $('.selectpicker').selectpicker('refresh');
       $('select[name=start-of-day]').val(settings.startOfDay);

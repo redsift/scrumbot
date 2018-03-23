@@ -55,12 +55,12 @@ export default class MyController extends SiftController {
   onStorageUpdate(value) {
     console.log('scrumbot: onStorageUpdate: ', value);
 
-    return this.getSettings().then(settings => {
+    this.getSettings().then(settings => {
       console.log('onStorageUpdate: settings: ', settings);
       this.publish('settings', settings);
     });
 
-    return this.getSlackInfo().then(slackInfo => {
+    this.getSlackInfo().then(slackInfo => {
       console.log('onStorageUpdate: slackInfo:', slackInfo);
       this.publish('slackInfo', slackInfo);
     });
