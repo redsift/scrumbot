@@ -201,9 +201,6 @@
       }
     ],
     "stores": {
-      "server": {
-        "import": "_server"
-      },
       "settings": {
         "key$schema": "string"
       },
