@@ -157,7 +157,7 @@
 	      var slackInfo = _ref.slackInfo,
 	          settings = _ref.settings;
 	
-	      if (slackInfo) {
+	      if (slackInfo && settings) {
 	        $('select[name=tz]').val(settings.tz);
 	        $('.selectpicker').selectpicker('refresh');
 	        $('select[name=start-of-day]').val(settings.startOfDay);
