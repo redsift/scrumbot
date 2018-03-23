@@ -78,7 +78,7 @@ export default class MyView extends SiftView {
   }
 
   setupUI({ slackInfo, settings }) {
-    if (slackInfo) {
+    if (slackInfo && settings) {
       $('select[name=tz]').val(settings.tz);
       $('.selectpicker').selectpicker('refresh');
       $('select[name=start-of-day]').val(settings.startOfDay);
