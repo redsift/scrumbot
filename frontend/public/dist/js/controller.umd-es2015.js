@@ -131,12 +131,12 @@
 	
 	      console.log('scrumbot: onStorageUpdate: ', value);
 	
-	      return this.getSettings().then(function (settings) {
+	      this.getSettings().then(function (settings) {
 	        console.log('onStorageUpdate: settings: ', settings);
 	        _this2.publish('settings', settings);
 	      });
 	
-	      return this.getSlackInfo().then(function (slackInfo) {
+	      this.getSlackInfo().then(function (slackInfo) {
 	        console.log('onStorageUpdate: slackInfo:', slackInfo);
 	        _this2.publish('slackInfo', slackInfo);
 	      });

@@ -147,7 +147,7 @@
 	  }, {
 	    key: 'willPresentView',
 	    value: function willPresentView(value) {
-	      console.log('hello-sift: willPresentView: ', value);
+	      console.log('scrumbot: willPresentView: ', value);
 	    }
 	  }, {
 	    key: 'setupUI',
@@ -156,6 +156,8 @@
 	
 	      var slackInfo = _ref.slackInfo,
 	          settings = _ref.settings;
+	
+	      console.log('scrumbot: setupUI: ', slackInfo, settings);
 	
 	      if (slackInfo && settings) {
 	        $('select[name=tz]').val(settings.tz);
