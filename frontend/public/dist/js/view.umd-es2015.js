@@ -113,18 +113,9 @@
 	
 	      debugger;
 	
-	      this.showOAuthUI({
+	      this.showOAuthPopup({
 	        provider: 'google',
 	        options: { refreshToken: true }
-	      });
-	
-	      this.login();
-	
-	      this.logout();
-	
-	      this.navigate({
-	        href: 'https://ondmarc.com',
-	        openInNewTab: true
 	      });
 	
 	      var _value$data = value.data,
