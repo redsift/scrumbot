@@ -1865,19 +1865,12 @@
 	        }, '*');
 	      }
 	    }, {
-	      key: 'showSlackAuthUI',
-	      value: function showSlackAuthUI() {
-	        var topic = 'showSlackAuth';
-	        var value = {};
-	        this.notifyClient(topic, value);
-	      }
-	    }, {
-	      key: 'showOAuthUI',
-	      value: function showOAuthUI(_ref) {
+	      key: 'showOAuthPopup',
+	      value: function showOAuthPopup(_ref) {
 	        var provider = _ref.provider,
 	            _ref$options = _ref.options,
 	            options = _ref$options === undefined ? null : _ref$options;
-	        var topic = 'showOAuthUI';
+	        var topic = 'showOAuthPopup';
 	        var value = { provider: provider, options: options };
 	        this.notifyClient(topic, value);
 	      }
