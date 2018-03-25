@@ -41,8 +41,6 @@ export default class MyView extends SiftView {
   presentView(value) {
     console.log('scrumbot-sift: presentView: ', value);
 
-    debugger;
-
     const { data: { slackInfo, settings } } = value;
 
     this._slackInfo = slackInfo;
