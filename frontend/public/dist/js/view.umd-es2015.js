@@ -84,34 +84,13 @@
 	    return _this;
 	  }
 	
-	  // TODO:move into @redsift/sift-sdk-web!
+	  // for more info: http://docs.redsift.com/docs/client-code-siftview
 	
 	
 	  _createClass(MyView, [{
-	    key: '_showSlackAuthUI',
-	    value: function _showSlackAuthUI() {
-	      console.log('_showSlackAuthUI called');
-	
-	      var topic = 'showSlackAuth';
-	      var value = {};
-	
-	      this._proxy.postMessage({
-	        method: 'notifyClient',
-	        params: {
-	          topic: topic,
-	          value: value
-	        }
-	      }, '*');
-	    }
-	
-	    // for more info: http://docs.redsift.com/docs/client-code-siftview
-	
-	  }, {
 	    key: 'presentView',
 	    value: function presentView(value) {
 	      console.log('scrumbot-sift: presentView: ', value);
-	
-	      debugger;
 	
 	      var _value$data = value.data,
 	          slackInfo = _value$data.slackInfo,
@@ -171,7 +150,6 @@
 	        $('#notConfigured').css('display', 'none');
 	      } else {
 	        document.querySelector('#signupBtn').addEventListener('click', function (e) {
-	          console.log('clicked connect button');
 	          _this2.showOAuthPopup({ provider: 'slack' });
 	        });
 	
