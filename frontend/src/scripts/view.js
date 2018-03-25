@@ -18,25 +18,6 @@ export default class MyView extends SiftView {
     this._settings = null;
   }
 
-  // TODO:move into @redsift/sift-sdk-web!
-  _showSlackAuthUI() {
-    console.log('_showSlackAuthUI called');
-
-    const topic = 'showSlackAuth';
-    const value = {};
-
-    this._proxy.postMessage(
-      {
-        method: 'notifyClient',
-        params: {
-          topic: topic,
-          value: value,
-        },
-      },
-      '*'
-    );
-  }
-
   // for more info: http://docs.redsift.com/docs/client-code-siftview
   presentView(value) {
     console.log('scrumbot-sift: presentView: ', value);
