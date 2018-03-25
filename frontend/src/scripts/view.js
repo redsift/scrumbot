@@ -92,8 +92,7 @@ export default class MyView extends SiftView {
       $('#notConfigured').css('display', 'none');
     } else {
       document.querySelector('#signupBtn').addEventListener('click', e => {
-        console.log('clicked connect button');
-        this._showSlackAuthUI();
+        this.showOAuthPopup({ provider: 'slack' });
       });
 
       $('#configured').css('display', 'none');

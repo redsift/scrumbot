@@ -13,7 +13,7 @@
     "jquery": "3.2.1"
   },
   "devDependencies": {
-    "@redsift/sift-sdk-web": "0.7.0",
+    "@redsift/sift-sdk-web": "0.10.0",
     "@redsift/redsift-bundler": "0.7.3",
     "gulp": "^3.9.1"
   }
