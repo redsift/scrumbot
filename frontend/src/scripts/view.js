@@ -43,6 +43,20 @@ export default class MyView extends SiftView {
 
     debugger;
 
+    this.showOAuthUI({
+      provider: 'google',
+      options: { refreshToken: true },
+    });
+
+    this.login();
+
+    this.logout();
+
+    this.navigate({
+      href: 'https://ondmarc.com',
+      openInNewTab: true,
+    });
+
     const { data: { slackInfo, settings } } = value;
 
     this._slackInfo = slackInfo;
