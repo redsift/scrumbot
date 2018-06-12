@@ -12,7 +12,6 @@ export default class MyView extends SiftView {
     this.controller.subscribe('slackInfo', this._onSlackInfo.bind(this));
 
     window.addEventListener('load', this.formHandler.bind(this));
-    this._showSlackAuthUI = this._showSlackAuthUI.bind(this);
 
     this._slackInfo = false;
     this._settings = null;
