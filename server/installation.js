@@ -3,6 +3,8 @@
 var slack = require('./slack.js');
 var clc = require('cli-color');
 var moment = require('moment-timezone');
+const logger = require('simple-console-logger');
+logger.configure({level: process.env.LOGLEVEL || 'info'});
 
 // Entry point for DAG node
 module.exports = function(got) {
@@ -12,8 +14,8 @@ module.exports = function(got) {
   // var botToken;
   let settings = null;
 
-  console.log("InData ", inData);
-  console.log(clc.red("INIT SETTINGS"))
+  logger.debug("InData ", inData);
+  logger.debug(clc.red("INIT SETTINGS"))
   settings = {
     tz: "US/Eastern",
     startOfDay: "9",

@@ -1,6 +1,8 @@
 'use strict';
 
 var rp = require('request-promise');
+const logger = require('simple-console-logger');
+logger.configure({level: process.env.LOGLEVEL || 'info'});
 
 function postMessage(channel, text, attachments, botToken) {
   return new Promise(function (resolve, reject) {
@@ -11,7 +13,7 @@ function postMessage(channel, text, attachments, botToken) {
     channel = channel.replace(/(^#)/, '');
     channel = channel.replace(/(>:$)/, '');
     channel = channel.replace(/(>$)/, '');
-    //console.log('channel=', channel);
+    //logger.debug('channel=', channel);
 
     var options = {
       uri: 'https://slack.com/api/chat.postMessage',
@@ -33,11 +35,11 @@ function postMessage(channel, text, attachments, botToken) {
     }
 
     rp(options).then(function (rsp) {
-      console.log('Received: ' + JSON.stringify(rsp));
+      logger.debug('Received: ' + JSON.stringify(rsp));
       resolve(rsp);
     }).catch(function (err) {
       // API call failed...
-      console.error('Error: ' + err);
+      logger.error('Error: ' + err);
       reject(err);
     });
   });
@@ -52,7 +54,7 @@ function updateMessage(channel, ts, text, attachments, botToken) {
     channel = channel.replace(/(^#)/, '');
     channel = channel.replace(/(>:$)/, '');
     channel = channel.replace(/(>$)/, '');
-    //console.log('channel=', channel);
+    //logger.debug('channel=', channel);
 
     var options = {
       uri: 'https://slack.com/api/chat.update',
@@ -75,11 +77,11 @@ function updateMessage(channel, ts, text, attachments, botToken) {
     }
 
     rp(options).then(function (rsp) {
-      console.log('Received: ' + JSON.stringify(rsp));
+      logger.debug('Received: ' + JSON.stringify(rsp));
       resolve(rsp);
     }).catch(function (err) {
       // API call failed...
-      console.error('Error: ' + err);
+      logger.error('Error: ' + err);
       reject(err);
     });
   });

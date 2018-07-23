@@ -4,13 +4,16 @@
  */
 'use strict';
 
+const logger = require('simple-console-logger');
+logger.configure({level: process.env.LOGLEVEL || 'info'});
+
 module.exports = function (got) {
-  console.log('slack-signup: running...');
+  logger.debug('slack-signup: running...');
   let rpcValue = {};
   const inData = got['in'];
   let ret = [];
 
-  console.log('slack-signup: inData:', JSON.stringify(inData, null, 4));
+  logger.debug('slack-signup: inData:', JSON.stringify(inData, null, 4));
 
   inData.data.map(datum => {
     if(datum.key === 'slack/team_name') {
@@ -19,7 +22,7 @@ module.exports = function (got) {
   });  
   ret.push({name: 'slack_info', key: 'slack-signed-up', value: rpcValue });
 
-  console.log('slack-signup: ret:', JSON.stringify(ret, null, 4));
+  logger.debug('slack-signup: ret:', JSON.stringify(ret, null, 4));
   
   return ret;
 };

@@ -5,6 +5,8 @@
 'use strict';
 
 var slack = require('./slack.js');
+const logger = require('simple-console-logger');
+logger.configure({level: process.env.LOGLEVEL || 'info'});
 
 // Entry point for DAG node
 module.exports = function(got) {
@@ -12,11 +14,11 @@ module.exports = function(got) {
   var results = [];
   var botToken;
   // Extract the Slack API token
-  console.log("IDD ", inData)
+  logger.debug("IDD ", inData)
   inData.data.forEach(function(d) {
     if(d.key == 'slack/bot_access_token') {
       botToken = d.value.toString();
-      console.log("BT ", botToken)
+      logger.debug("BT ", botToken)
     }
   });
 
@@ -28,7 +30,7 @@ module.exports = function(got) {
         return null;
       }));
   } catch (ex) {
-    console.error('meetingcall: Exception: ', ex);
+    logger.error('meetingcall: Exception: ', ex);
   }
 
   return results;
