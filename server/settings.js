@@ -1,6 +1,8 @@
 'use strict';
 
 var slack = require('./slack.js');
+const logger = require('simple-console-logger');
+logger.configure({level: process.env.LOGLEVEL || 'info'});
 
 // Entry point for DAG node
 module.exports = function(got) {
@@ -8,15 +10,15 @@ module.exports = function(got) {
   var results = [];
   var botToken;
   // Extract the Slack API token
-  console.log("SETTINGS ", inData)
+  logger.debug("SETTINGS ", inData)
   inData.data.forEach(function(d) {
     // if(d.key == 'slack/bot_access_token') {
     //   botToken = d.value.toString();
-    //   console.log("INSTALLED! ", botToken)
+    //   logger.debug("INSTALLED! ", botToken)
     // }
     if(d.key == 'settings') {
       let formData = decodeURIComponent(d.value);
-      console.log("INSTALLED! ", formData)
+      logger.debug("INSTALLED! ", formData)
       results.push({
         name: "settings",
         key: "settings",

@@ -5,6 +5,8 @@
 'use strict';
 
 var slack = require('./slack.js');
+const logger = require('simple-console-logger');
+logger.configure({level: process.env.LOGLEVEL || 'info'});
 
 // Entry point for DAG node
 module.exports = function(got) {
@@ -15,7 +17,7 @@ module.exports = function(got) {
 
   // Iterate over all report records and reset them.
   for (var d of inData.data) {
-    console.log('RESETTING: ', d);
+    logger.debug('RESETTING: ', d);
     results.push({
       name: "reports",
       key: d.key,

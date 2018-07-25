@@ -8,6 +8,7 @@
   "dependencies": {
     "request-promise": "^3.0.0",
     "cli-color": "^1.2.0",
-    "moment-timezone": "^0.5.13"
+    "moment-timezone": "^0.5.13",
+    "simple-console-logger": "2.0.2"
   }
 }

@@ -5,6 +5,8 @@
 'use strict';
 
 var slack = require('./slack.js');
+const logger = require('simple-console-logger');
+logger.configure({level: process.env.LOGLEVEL || 'info'});
 
 // Entry point for DAG node
 module.exports = function(got) {
@@ -49,20 +51,20 @@ module.exports = function(got) {
   });
 
   for (var d of inData.data) {
-    //console.log('MESSAGES: data: ', d.value.toString());
+    //logger.debug('MESSAGES: data: ', d.value.toString());
     if (d.value) {
       try {
         //Ignore deleted messages and bot messages.
         var msg = JSON.parse(d.value);
         if (msg.subtype === 'message_deleted' || msg.subtype === "bot_message") {
-          console.log("DROPPING msg of subtype ", msg.subtype)
+          logger.debug("DROPPING msg of subtype ", msg.subtype)
           continue;
         }
         // Ignore update messages
         if (msg.message) {
           continue
         }
-        console.log("VALID MSG: ", msg)
+        logger.debug("VALID MSG: ", msg)
         //var session_id = msg.channel + '-' + msg.user + '-' + Date.now();
         // remove <@..> direct mention
         msg.text = msg.text.replace(/(^<@.*>\s+)/i, '');
@@ -94,8 +96,8 @@ module.exports = function(got) {
 
 
       } catch (ex) {
-        console.error('MESSAGES: Error parsing value for: ', d.key);
-        console.error('MESSAGES: Exception: ', ex);
+        logger.error('MESSAGES: Error parsing value for: ', d.key);
+        logger.error('MESSAGES: Exception: ', ex);
         continue;
       }
     }

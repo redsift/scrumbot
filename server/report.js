@@ -5,6 +5,8 @@
 'use strict';
 
 var slack = require('./slack.js');
+const logger = require('simple-console-logger');
+logger.configure({level: process.env.LOGLEVEL || 'info'});
 
 // Entry point for DAG node
 module.exports = function(got) {
@@ -24,20 +26,20 @@ module.exports = function(got) {
     if (lookup.bucket === 'currentSummary' && lookup.data && lookup.data.key === 'current' && lookup.data.value) {
       current = JSON.parse(lookup.data.value.toString());
     }
-    console.log("CURRENT SUMMARY ", current);
+    logger.debug("CURRENT SUMMARY ", current);
   });
 
   var summary = "*Current Standup Status*\n_brought to you by <https://redsift.com/?utm_source=scrum_bot&utm_medium=slack|Red Sift>_\n";
   // Append all report records to summary message
   for (var d of inData.data) {
-    console.log('report.js: data: ', d);
+    logger.debug('report.js: data: ', d);
     let report = d.value.toString();
     summary += `><@${d.key}>:\t ${d.value.toString()}\n`;
   }
-  console.log("SENDING ", summary)
+  logger.debug("SENDING ", summary)
   // If there is a current report update it, otherwise post a new one.
   if (current) {
-    console.log("UPDATING STATUS")
+    logger.debug("UPDATING STATUS")
     results.push(slack.updateMessage(current.channel, current.ts, summary, null, botToken).then((res, rej) => {
       return ({
         name: "currentSummary",
@@ -46,9 +48,9 @@ module.exports = function(got) {
       })
     }));
   } else {
-    console.log("NEW STATUS")
+    logger.debug("NEW STATUS")
     results.push(slack.postMessage("#general", summary, null, botToken).then((res, rej) => {
-      console.log("POST RES", res)
+      logger.debug("POST RES", res)
       return ({
         name: "currentSummary",
         key: "current",
