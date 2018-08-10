@@ -12,7 +12,7 @@ logger.configure({level: process.env.LOGLEVEL || 'info'});
 // Entry point for DAG node
 module.exports = function(got) {
   const inData = got['in'];
-  const lookupData = got['lookup'];
+  const getData = got['get'];
   let results = [];
   let botToken;
   let settings = null;
@@ -28,10 +28,10 @@ module.exports = function(got) {
     }
   });
   // Extract the Slack API token
-  logger.debug("LKD ", lookupData)
-  lookupData.forEach(function(d) {
-    if (d.data.key == 'settings' && d.data.value) {
-      settings = JSON.parse(d.data.value);
+  logger.debug("GD ", getData)
+  getData.forEach(function(d) {
+    if (d.data[0].key == 'settings' && d.data[0].value) {
+      settings = JSON.parse(d.data[0].value);
     }
   });
   if (!settings) {

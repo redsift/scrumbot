@@ -19,12 +19,12 @@ module.exports = function(got) {
   var current = null;
   var results = [];
   //Extract Slack API token
-  got.lookup.forEach(function(lookup) {
-    if (lookup.bucket === 'credentials' && lookup.data && lookup.data.key === 'slack/bot_access_token' && lookup.data.value) {
-      botToken = lookup.data.value.toString();
+  got.get.forEach(function(get) {
+    if (get.bucket === 'credentials' && get.data[0] && get.data[0].key === 'slack/bot_access_token' && get.data[0].value) {
+      botToken = get.data[0].value.toString();
     }
-    if (lookup.bucket === 'currentSummary' && lookup.data && lookup.data.key === 'current' && lookup.data.value) {
-      current = JSON.parse(lookup.data.value.toString());
+    if (get.bucket === 'currentSummary' && get.data[0] && get.data[0].key === 'current' && get.data[0].value) {
+      current = JSON.parse(get.data[0].value.toString());
     }
     logger.debug("CURRENT SUMMARY ", current);
   });

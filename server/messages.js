@@ -24,21 +24,21 @@ module.exports = function(got) {
   Please report any problems or bugs to team@redsift.com`
 
   var outOfChannelText = `Please help keep the general channel clear by only talking to me on my private channel`
-  got.lookup.forEach(function(lookup) {
+  got.get.forEach(function(get) {
     //Extract the slack api token
-    if (lookup.bucket === 'credentials' && lookup.data && lookup.data.key === 'slack/bot_access_token' && lookup.data.value) {
-      botToken = lookup.data.value.toString();
+    if (get.bucket === 'credentials' && get.data[0] && get.data[0].key === 'slack/bot_access_token' && get.data[0].value) {
+      botToken = get.data[0].value.toString();
       return;
     }
     // Check to make sure that we haven't throtled the response because of duelling bots.
-    if (lookup.bucket === 'throttle' && lookup.data && lookup.data.key === 'throttle' ) {
-      throttleUser = lookup.data.value;
+    if (get.bucket === 'throttle' && get.data[0] && get.data[0].key === 'throttle' ) {
+      throttleUser = get.data[0].value;
       return;
     }
     // Do we have a 'current' summary
-    if (lookup.bucket === 'currentSummary' && lookup.data && lookup.data.key === 'current' && lookup.data.value) {
+    if (get.bucket === 'currentSummary' && get.data[0] && get.data[0].key === 'current' && get.data[0].value) {
       try {
-        currentSummary = JSON.parse(lookup.data.value.toString()).message.text;
+        currentSummary = JSON.parse(get.data[0].value.toString()).message.text;
       } catch (ex) {
         currentSummary = "No reports yet";
       }

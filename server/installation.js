@@ -9,9 +9,7 @@ logger.configure({level: process.env.LOGLEVEL || 'info'});
 // Entry point for DAG node
 module.exports = function(got) {
   const inData = got['in'];
-  // const lookupData = got['lookup'];
   var results = [];
-  // var botToken;
   let settings = null;
 
   logger.debug("InData ", inData);

@@ -114,7 +114,7 @@
         "input": {
           "bucket": "credentials",
           "select": "slack/bot_access_token",
-          "lookup": [{
+          "get": [{
             "bucket": "settings",
             "key": "settings"
           }]
@@ -136,7 +136,7 @@
           "bucket": "reports",
           "select": "*",
           "computeOnEmptySelect": true,
-          "lookup": [{
+          "get": [{
             "bucket": "credentials",
             "key": "slack/bot_access_token"
           }, {
@@ -157,7 +157,7 @@
         },
         "input": {
           "bucket": "all",
-          "lookup": [{
+          "get": [{
               "bucket": "credentials",
               "key": "slack/bot_access_token"
             },
@@ -185,7 +185,7 @@
         "input": {
           "bucket": "reports",
           "select": "*",
-          "lookup": [{
+          "get": [{
               "bucket": "credentials",
               "key": "slack/bot_access_token"
             },

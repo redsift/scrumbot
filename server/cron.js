@@ -9,7 +9,7 @@ logger.configure({level: process.env.LOGLEVEL || 'info'});
 // Entry point for DAG node
 module.exports = function(got) {
   const inData = got['in'];
-  const lookupData = got['lookup'];
+  const getData = got['get'];
   var results = [];
   var botToken;
   let settings = null;
@@ -18,7 +18,7 @@ module.exports = function(got) {
   var initialMsg = "Hello, I\'m <@scrumbot>, please send me stand-up reports on my private channel when I ask for them. \n You can also ask me for `status` and `help`.";
   // Extract the Slack API token
   logger.debug("InData ", inData);
-  logger.debug("LOOKUP ", got['lookup'])
+  logger.debug("GET ", got['get'])
 
 
 
@@ -31,11 +31,11 @@ module.exports = function(got) {
     });
   });
 
-  lookupData.forEach(function(d) {
+  getData.forEach(function(d) {
     //Get settings and slack token.
-    logger.debug('LK ITEM', d.data);
-    if (d.data.key == 'settings' && d.data.value) {
-      settings = JSON.parse(d.data.value);
+    logger.debug('LK ITEM', d.data[0]);
+    if (d.data.key == 'settings' && d.data[0].value) {
+      settings = JSON.parse(d.data[0].value);
     }
     if(settings == null) {
       settings = {
@@ -45,8 +45,8 @@ module.exports = function(got) {
       };
     }
 
-    if (d.data.key == 'slack/bot_access_token' && d.data.value) {
-      botToken = d.data.value.toString();
+    if (d.data[0].key == 'slack/bot_access_token' && d.data[0].value) {
+      botToken = d.data[0].value.toString();
       logger.debug("BT ", botToken)
     }
   });
