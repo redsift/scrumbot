@@ -30,7 +30,7 @@ module.exports = function(got) {
   // Extract the Slack API token
   logger.debug("GD ", getData)
   getData.forEach(function(d) {
-    if (d.data[0].key == 'settings' && d.data[0].value) {
+    if (d.data[0] && d.data[0].key == 'settings' && d.data[0].value) {
       settings = JSON.parse(d.data[0].value);
     }
   });

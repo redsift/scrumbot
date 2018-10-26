@@ -45,7 +45,7 @@ module.exports = function(got) {
       };
     }
 
-    if (d.data[0].key == 'slack/bot_access_token' && d.data[0].value) {
+    if (d.data[0] && d.data[0].key == 'slack/bot_access_token' && d.data[0].value) {
       botToken = d.data[0].value.toString();
       logger.debug("BT ", botToken)
     }
