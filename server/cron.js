@@ -34,7 +34,7 @@ module.exports = function(got) {
   getData.forEach(function(d) {
     //Get settings and slack token.
     logger.debug('LK ITEM', d.data[0]);
-    if (d.data.key == 'settings' && d.data[0].value) {
+    if (d.data[0].key == 'settings' && d.data[0].value) {
       settings = JSON.parse(d.data[0].value);
     }
     if(settings == null) {
