@@ -198,6 +198,21 @@
         "outputs": {
           "currentSummary": {}
         }
+      },
+      {
+        "#": "Weekend Dummy Cron",
+        "implementation": {
+          "javascript": "server/dummy-cron.js",
+          "when": {
+            "crontab": "0 * * * 0,6",
+            "run": {
+              "install": false,
+              "update": false
+            }
+          }
+        },
+        "outputs": {
+        }
       }
     ],
     "stores": {
