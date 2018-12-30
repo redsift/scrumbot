@@ -3,7 +3,7 @@
   "display-name": "Scrumbot Sift",
   "description": "Slackbot for daily standup meetings",
   "author": "Michael Karliner",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "icon": "assets/icon.svg",
   "subtitle": "A Slackbot for daily standup meetings.",
   "marketing": {

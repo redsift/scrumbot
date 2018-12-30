@@ -33,7 +33,6 @@ module.exports = function(got) {
   // Append all report records to summary message
   for (var d of inData.data) {
     logger.debug('report.js: data: ', d);
-    let report = d.value.toString();
     summary += `><@${d.key}>:\t ${d.value.toString()}\n`;
   }
   logger.debug("SENDING ", summary)

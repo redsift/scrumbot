@@ -43,7 +43,7 @@ module.exports = function(got) {
         currentSummary = "No reports yet";
       }
       return;
-    } else {
+    } else if (get.bucket === 'currentSummary') {
       currentSummary = "No reports yet!";
       return;
     }
